@@ -1,0 +1,21 @@
+The life of Erick
+School/Career
+    short paragraph about my career goals and objectives
+    links to github and linkedin
+    list of education/projects
+    general feel very similar to a well-structured resume
+Fitness
+    short paragraph about my relationship with fitness
+    list of goals to accomplish
+Personal
+    information about where I grew up/my family etc.
+    list of other things I like to do for fun
+    possible blog/posts ideas can go here
+    include fun pictures of some of my favorite moments
+
+features:
+    option bar at top of page to switch to any of the sub pages
+    main heading "The Life of Erick"
+    sub-content boxes on main page (more visually appealing than the option bar) to toggle to sub pages
+    if possible, include a cool scroll effect like the one here: https://www.sfoutsidelands.com/
+    
