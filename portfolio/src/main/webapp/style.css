@@ -4,6 +4,17 @@
   width: 650px;
 }
 
-#greeting-container {
+#quote-container {
   margin-top: 20px;
+}
+
+body {
+  background-image: url("paper.gif");
+}
+
+#personal {
+    width: 350px;
+    height: 200px;
+    background-size: contain;
+    background-image: url('images/flag.jpg');
 }
