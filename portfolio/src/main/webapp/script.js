@@ -18,12 +18,19 @@
 function addRandomQuote() {
   const quotes=
       ['Life happens wherever you are, whether you make it or not.', 'Pride is not the opposite of shame, but its source.', 
-      'In the darkness, hope is something you give yourself', 'If you keep moving you will come to a better place'];
+      'In the darkness, hope is something you give yourself', 'If you keep moving you will come to a better place',
+      'You must actively shape your own destiny and the destiny of the world.', 'We can\'t concern ourselves with what was. We must act on what is.',
+      'Anyone is capable of great good and great evil.'];
+      
+  const buttonText = ['Give me more wisdom', 'MORE!!', 'Enlighten me again!', 'Teach me your ways', 'I\'m one step away from controlling the Avatar State'];
 
   // Pick a random greeting.
   const quote = quotes[Math.floor(Math.random() * quotes.length)];
 
+  //Pick random button text
+  const genButton = buttonText[Math.floor(Math.random() * buttonText.length)];
+
   // Add it to the page.
-  const quoteContainer = document.getElementById('quote-container');
-  quoteContainer.innerText = quote;
+  document.getElementById('quote-container').innerText = quote;
+  document.getElementById('genquote').innerText = genButton;
 }
