@@ -15,14 +15,15 @@
 /**
  * Adds a random greeting to the page.
  */
-function addRandomGreeting() {
-  const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
+function addRandomQuote() {
+  const quotes=
+      ['Life happens wherever you are, whether you make it or not.', 'Pride is not the opposite of shame, but its source.', 
+      'In the darkness, hope is something you give yourself', 'If you keep moving you will come to a better place'];
 
   // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+  const quote = quotes[Math.floor(Math.random() * quotes.length)];
 
   // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
+  const quoteContainer = document.getElementById('quote-container');
+  quoteContainer.innerText = quote;
 }
