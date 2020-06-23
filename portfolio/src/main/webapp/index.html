@@ -7,15 +7,26 @@
     <script src="script.js"></script>
   </head>
   <body>
-    <div id="content">
-      <h1>Erick Enriquez</h1>
-      <p>This portfolio contains all the information and content Erick feel's you need to know about Erick's life.</p>
-      <p>If you are not interested in my life, perhaps you will be interested in a few quotes from <a href="https://en.wikipedia.org/wiki/The_Greatest_Show_on_Earth_(film)">Avatar: The Last Airbender</a></p>
-      <button id="genquote" onclick="addRandomQuote()">Give Me Wisdom</button>
-      <div id="quote-container"></div>
-      <h2 id="professional">Professional Life</h2>
-      <h2 id="hobbies">Erick's Hobbies</h2>
-      <h2 id="personal">Personal Life</h2>
+    <div id="header">
+        <h1>Erick Enriquez</h1>
+        <p>This portfolio contains all the information and content Erick feel's you need to know about Erick's life. If you are not interested in my life, perhaps you will be interested in a few quotes from <a href="https://en.wikipedia.org/wiki/The_Greatest_Show_on_Earth_(film)">Avatar: The Last Airbender</a></p>
+        <button id="genquote" onclick="addRandomQuote()">Give Me Wisdom</button>
+        <div id="quote-container"></div>
+    </div>
+    <div class="float-container">
+        <div class = "float-child" id="float1">
+            <p id="percap">Personal Life</p>
+            <a href="personal.html"><img class="image" id="personal" src="images/friends.jpg"/></a>
+        </div>
+        <div class = "float-child" id="float2">
+            <p id="hobcap">Hobbies</p>
+            <a href="hobbies.html"><img class="image" id="hobbies "src="images/hstand.JPG"/></a>
+        </div>
+        <div class = "float-child" id="float3">
+            <p id="profcap">Professional Life</p>
+            <a href="professional.html"><img class="image"id="professional" src="images/headshot.jpg"/></a>
+        </div>
     </div>
   </body>
 </html>
+

@@ -22,7 +22,7 @@ function addRandomQuote() {
       'You must actively shape your own destiny and the destiny of the world.', 'We can\'t concern ourselves with what was. We must act on what is.',
       'Anyone is capable of great good and great evil.'];
       
-  const buttonText = ['Give me more wisdom', 'MORE!!', 'Enlighten me again!', 'Teach me your ways', 'I\'m one step away from controlling the Avatar State'];
+  const buttonText = ['Give me more wisdom', 'MORE!!', 'Enlighten me again!', 'Teach me your ways', 'Another one!', 'I like that, tell me another'];
 
   // Pick a random greeting.
   const quote = quotes[Math.floor(Math.random() * quotes.length)];

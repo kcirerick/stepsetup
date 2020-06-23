@@ -1,20 +1,83 @@
-#content {
-  margin-left: auto;
-  margin-right: auto;
-  width: 650px;
+html { 
+  background: url(images/forest.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  font: small-caps bold 36px sans-serif;
+  color: #d6a922;
+  text-shadow:
+    1px 0px 1px #ccc, 0px 1px 1px #eee, 
+    2px 1px 1px #ccc, 1px 2px 1px #eee,
+    3px 2px 1px #ccc, 2px 3px 1px #eee,
+    4px 3px 1px #ccc, 3px 4px 1px #eee,
+    5px 4px 1px #ccc;
+}
+ 
+#header {
+    text-align:center;
+    font-size: 42;
 }
 
+a {
+    font: inherit;
+    color:inherit;
+    text-shadow: inherit;
+}
+
+p {
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    font-size: 36px;
+}
+ 
 #quote-container {
-  margin-top: 20px;
+    font-size: 36px;
+}
+ 
+.float-container {
+    padding: 0px;
+    width: 100vw;
+    text-align: center;
+}
+ 
+.float-child {
+    display: inline-block;
+    position: relative;
+}
+ 
+.image {
+    width: 250px;
+    float:left;
+    max-width:100%;
+    height:auto;
+    border: 5px solid blue;
+    border-style: ridge;
+}
+ 
+#hobbies {
+    height: auto; 
+    width: auto; 
+    margin: 100px;
 }
 
-body {
-  background-image: url("paper.gif");
+#percap {
+    position: inherit;
+    top: 400px;
 }
 
-#personal {
-    width: 350px;
-    height: 200px;
-    background-size: contain;
-    background-image: url('images/flag.jpg');
+#hobcap {
+    position: inherit;
+    top: 25px;
+}
+
+#profcap {
+    position: inherit;
+    top: 325px;
+    left: -25px;
+}
+
+float2 {
+    margin-left: 85px;
 }
