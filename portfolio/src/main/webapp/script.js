@@ -18,7 +18,7 @@
 function addRandomQuote() {
   const quotes=
       ['Life happens wherever you are, whether you make it or not.', 'Pride is not the opposite of shame, but its source.', 
-      'In the darkness, hope is something you give yourself', 'If you keep moving you will come to a better place'];
+      'In the darkness, hope is something you give yourself.', 'If you keep moving you will come to a better place.'];
 
   // Pick a random greeting.
   const quote = quotes[Math.floor(Math.random() * quotes.length)];
