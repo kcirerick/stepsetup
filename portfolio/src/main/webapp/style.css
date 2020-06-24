@@ -40,11 +40,13 @@ p {
     padding: 0px;
     width: 100vw;
     text-align: center;
+    margin-top: 0px;
 }
  
 .float-child {
     display: inline-block;
     position: relative;
+    text-align:center;
 }
  
 .image {
@@ -67,6 +69,11 @@ p {
     top: 400px;
 }
 
+#crisistext {
+    text-align: center;
+    margin-top: 80px;
+}
+
 #hobcap {
     position: inherit;
     top: 25px;
@@ -79,5 +86,9 @@ p {
 }
 
 float2 {
-    margin-left: 85px;
+    margin-left: 85px; 
+}
+
+.cards {
+    margin-left: 15px;
 }
