@@ -25,12 +25,26 @@ function addRandomQuote() {
   const buttonText = ['Give me more wisdom', 'MORE!!', 'Enlighten me again!', 'Teach me your ways.', 'Another one!', 'I like that, tell me another.'];
 
   // Pick a random greeting.
-  const quote = quotes[Math.floor(Math.random() * quotes.length)];
+  let quote = quotes[Math.floor(Math.random() * quotes.length)];
 
-  //Pick random button text
-  const genButton = buttonText[Math.floor(Math.random() * buttonText.length)];
+  //Pick random button text.
+  let genButton = buttonText[Math.floor(Math.random() * buttonText.length)];
 
-  // Add it to the page.
+  // Retrieve current quote.
+  currQuote = document.getElementById('quote-container').innerText;
+  currButton= document.getElementById('genquote').innerText;
+
+  // Pick a random greeting until we get a new quote.
+  while(currQuote === quote) {
+      quote = quotes[Math.floor(Math.random() * quotes.length)];
+  }
+
+  //Pick random button text until we get a new message.
+  while(currButton === genButton) {
+      genButton = buttonText[Math.floor(Math.random() * buttonText.length)];
+  }
+
+  //Add new quote and button text to page.
   document.getElementById('quote-container').innerText = quote;
   document.getElementById('genquote').innerText = genButton;
 }
