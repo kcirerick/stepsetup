@@ -12,12 +12,8 @@ html {
 #header {
     font-size: 42;
     text-align:center;
-    text-shadow:
-    1px 0px 1px #ccc, 0px 1px 1px #eee, 
-    2px 1px 1px #ccc, 1px 2px 1px #eee,
-    3px 2px 1px #ccc, 2px 3px 1px #eee,
-    4px 3px 1px #ccc, 3px 4px 1px #eee,
-    5px 4px 1px #ccc;
+    -webkit-text-stroke: 3px black;
+    -webkit-text-fill-color: #d6a922;
 }
 
 /* Add a black background color to the top navigation */
