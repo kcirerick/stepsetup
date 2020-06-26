@@ -19,9 +19,9 @@ html {
 @keyframes example {
   0%   {background-color:#0700b8;}
   25%  {background-color:#006eb8;}
-  50%  {background-color:rgb(0, 183, 255);}
-  75%  {background-color:#1de603;}
-  100% {background-color:#e2df18;}
+  50%  {background-color:rgb(9, 167, 230);}
+  75%  {background-color:#029909;}
+  100% {background-color:#c53306;}
 }
 
 body {
