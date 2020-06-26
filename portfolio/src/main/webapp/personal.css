@@ -5,7 +5,7 @@ html {
   background-attachment:fixed;
   background-position: left top;
   font-family: Impact, Charcoal, sans-serif;
-  font-size: 50px;
+  font-size: 42px;
   letter-spacing: -0.8px;
   word-spacing: 2.6px;
   font-weight: 700;
@@ -17,6 +17,8 @@ html {
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
+  -webkit-text-stroke: 2px black;
+  -webkit-text-fill-color: white;
 }
 
 #header {
@@ -62,6 +64,7 @@ body {
 
 * {box-sizing: border-box}
 .mySlides {display: none}
+#first {display: block}
 img {
     vertical-align: middle;
     height: auto;
@@ -72,6 +75,7 @@ img {
 /* Slideshow container */
 .slideshow-container {
   max-width: 1000px;
+  max-height: 1000px;
   position: relative;
   margin: auto;
 }
@@ -86,16 +90,16 @@ img {
   margin-top: -22px;
   color: white;
   font-weight: bold;
-  font-size: 18px;
+  font-size: 36px;
   transition: 0.6s ease;
-  border-radius: 0 3px 3px 0;
+  border-radius: 0 6px 6px 0;
   user-select: none;
 }
 
 /* Position the "next button" to the right */
 .next {
   right: 0;
-  border-radius: 3px 0 0 3px;
+  border-radius: 6px 0 0 6px;
 }
 
 /* On hover, add a black background color with a little bit see-through */
@@ -119,8 +123,8 @@ img {
 /* Number text (1/3 etc) */
 .numbertext {
   color: #f2f2f2;
-  font-size: 12px;
-  padding: 8px 12px;
+  font-size: 24px;
+  padding: 10px 14px;
   position: absolute;
   top: 0;
 }
