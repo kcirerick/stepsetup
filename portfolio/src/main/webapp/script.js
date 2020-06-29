@@ -95,7 +95,7 @@ function showSlides(n) {
 }
 
 function fetchRandQuote() {
-    fetch('/data').then(response => response.text()).then((quote) => {
-        document.getElementById('quote-container').innerText = quote
+    fetch('/data').then(response => response.json()).then((quotes) => {
+        document.getElementById('quote-container').innerText = quotes[1]
     });
 }
