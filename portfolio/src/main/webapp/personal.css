@@ -28,6 +28,11 @@ html {
     -webkit-text-fill-color: white;
 }
 
+body {
+    -webkit-text-stroke: 2px black;
+    -webkit-text-fill-color: white;
+}
+
 /* Add a black background color to the top navigation */
 .topnav {
     background-color: #333;
@@ -56,10 +61,6 @@ html {
 .topnav a.active {
     background-color: #fabf0c;
     color: white;
-}
-
-body {
-    font-family: Verdana, sans-serif; margin:0
 }
 
 * {box-sizing: border-box}
@@ -110,7 +111,7 @@ img {
 /* Caption text */
 .text {
   color: #f2f2f2;
-  font-size: 30px;
+  font-size: 34px;
   padding: 8px 12px;
   position: absolute;
   top: 10px;
