@@ -101,8 +101,11 @@ function fetchRandQuote() {
 }
 
 function addComment() {
-    fetch('/data').then(response => response.json()).then((comment) => {
-        document.getElementById('quote-container').innerText = comment;
+    fetch('/data').then(response => response.json()).then((comments) => {
+        comments.forEach(comment => {
+          commentDiv = document.getElementById('quote-container');
+          commentDiv.appendChild(createListElement(comment));
+      });
     });
 }
 
