@@ -20,7 +20,8 @@ function addRandomQuote() {
       ['Life happens wherever you are, whether you make it or not.', 'Pride is not the opposite of shame, but its source.', 
       'In the darkness, hope is something you give yourself.', 'If you keep moving you will come to a better place.',
       'You must actively shape your own destiny and the destiny of the world.', 'We can\'t concern ourselves with what was. We must act on what is.',
-      'Anyone is capable of great good and great evil.'];
+      'Anyone is capable of great good and great evil.', 
+      'you must look within yourself to save yourself from your other self, only then will you find your true self reveal itself'];
       
     const buttonText = ['Give me more wisdom', 'MORE!!', 'Enlighten me again!', 'Teach me your ways.', 'Another one!', 'I like that, tell me another.'];
 
@@ -63,4 +64,32 @@ function largerFont(element) {
 
 function normalFont(element) {
     element.style.fontSize = "100%";
+}
+
+/* Slideshow. */
+var slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  var i;
+  var slides = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {slideIndex = 1}    
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";  
+  }
+  for (i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";  
+  dots[slideIndex-1].className += " active";
 }

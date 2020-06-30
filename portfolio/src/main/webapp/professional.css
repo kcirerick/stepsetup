@@ -1,23 +1,35 @@
 /* Meta and Header styles. */
-html { 
-  background: url(images/forest.jpg) no-repeat center center fixed; 
+html {
+  background: url(images/back.jpg);
   background-size: cover;
-  color: #d6a922;
-  font: small-caps bold 36px sans-serif;
+  background-attachment:fixed;
+  background-position: left top;
+  font-family: Impact, Charcoal, sans-serif;
+  font-size: 50px;
+  letter-spacing: -0.8px;
+  word-spacing: 2.6px;
+  font-weight: 700;
+  text-decoration: none;
+  font-style: normal;
+  font-variant: normal;
+  text-transform: none;
+  text-align: center;
+  color: white;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
 }
- 
+
 #header {
-    font-size: 42;
+    font-size: 56px;
     text-align:center;
-    text-shadow:
-    1px 0px 1px #ccc, 0px 1px 1px #eee, 
-    2px 1px 1px #ccc, 1px 2px 1px #eee,
-    3px 2px 1px #ccc, 2px 3px 1px #eee,
-    4px 3px 1px #ccc, 3px 4px 1px #eee,
-    5px 4px 1px #ccc;
+    -webkit-text-stroke: 2px black;
+    -webkit-text-fill-color: white;
+}
+
+body {
+    -webkit-text-stroke: 2px black;
+    -webkit-text-fill-color: white;
 }
 
 /* Add a black background color to the top navigation */
@@ -34,6 +46,8 @@ html {
     padding: 14px 16px;
     text-align: center;
     text-decoration: none;
+    -webkit-text-stroke: 0px black;
+    -webkit-text-fill-color: white;
 }
 
 /* Change the color of links on hover */
@@ -44,6 +58,11 @@ html {
 
 /* Add a color to the active/current link */
 .topnav a.active {
-    background-color: #d6a922;
+    background-color: #fabf0c;
     color: white;
+}
+
+a {
+    -webkit-text-stroke: 2px black;
+    -webkit-text-fill-color: white;
 }

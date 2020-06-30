@@ -1,25 +1,29 @@
 /* Meta and Header styles. */
-html { 
-  background: url(images/forest.jpg) no-repeat center center fixed; 
+html {
+  background: url(images/back.jpg);
   background-size: cover;
-  font: small-caps bold 36px sans-serif;
-  color: #d6a922;
+  background-attachment:fixed;
+  background-position: left top;
+  font-family: Impact, Charcoal, sans-serif;
+  font-size: 50px;
+  letter-spacing: -0.8px;
+  word-spacing: 2.6px;
+  font-weight: 700;
+  text-decoration: none;
+  font-style: normal;
+  font-variant: normal;
+  text-transform: none;
+  color: white;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
 }
- 
+
 #header {
-    font-size: 42;
+    font-size: 56px;
     text-align:center;
-    text-shadow:
-    1px 0px 1px #ccc, 0px 1px 1px #eee, 
-    2px 1px 1px #ccc, 1px 2px 1px #eee,
-    3px 2px 1px #ccc, 2px 3px 1px #eee,
-    4px 3px 1px #ccc, 3px 4px 1px #eee,
-    5px 4px 1px #ccc;
-    -webkit-text-stroke: 1px black;
-    -webkit-text-fill-color: #d6a922;
+    -webkit-text-stroke: 3px black;
+    -webkit-text-fill-color: white;
 }
 
 /* Add a black background color to the top navigation */
@@ -48,7 +52,7 @@ html {
 
 /* Add a color to the active/current link */
 .topnav a.active {
-    background-color: #d6a922;
+    background-color: #fabf0c;
     color: white;
 }
 
@@ -57,12 +61,12 @@ a {
     color:inherit;
     font: inherit;
     text-shadow: inherit;
-    -webkit-text-stroke: 1px black;
-    -webkit-text-fill-color: #d6a922;
+    -webkit-text-stroke: 3px black;
+    -webkit-text-fill-color: white;
 }
 
 p {
-    font-size: 36px;
+    font-size: 40px;
     margin-left: auto;
     margin-right: auto;
     width: 50%;
@@ -75,7 +79,7 @@ p {
 }
 
 #quote-container {
-    font-size: 36px;
+    font-size: 50px;
 }
 
 /* Container for grouping elements. */ 
@@ -84,13 +88,7 @@ p {
     justify-content:space-around;
     margin: 0 auto;
     margin-top: 30px;
-    text-align: center;
-    text-shadow:
-    1px 0px 1px #ccc, 0px 1px 1px #eee, 
-    2px 1px 1px #ccc, 1px 2px 1px #eee,
-    3px 2px 1px #ccc, 2px 3px 1px #eee,
-    4px 3px 1px #ccc, 3px 4px 1px #eee,
-    5px 4px 1px #ccc;
+    text-align: left;
     width: 50vw;
 }
 
@@ -98,6 +96,8 @@ p {
     display: inline-block;
     position: relative;
     text-align:center;
+    -webkit-text-stroke: 3px black;
+    -webkit-text-fill-color: white;
 }
 
 /* Front page images. */
@@ -117,6 +117,7 @@ p {
 }
 
 #percap {
+    left: -25px;
     position: inherit;
     top: 400px;
 }
@@ -127,7 +128,7 @@ p {
 }
 
 #profcap {
-    left: -25px;
+    left: -60px;
     position: inherit;
     top: 325px;
     text-align: center;
@@ -139,9 +140,15 @@ p {
     text-align: center;
     font-size: 50px;
     -webkit-text-stroke: 3px black;
-    -webkit-text-fill-color: #d6a922;
+    -webkit-text-fill-color: white;
 }
 
 .cards {
     margin-left: 15px;
+}
+
+h1 {
+    margin: auto;
+    width: 50%;
+    text-align: center;
 }
