@@ -36,7 +36,7 @@ public class DataServlet extends HttpServlet {
   /** Retrieves user-generated quotes from datastore to load onto page. */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // Initialize all quotes
+    // Initialize allQuotes
     ArrayList<String> allQuotes = new ArrayList<>();
 
     // Initialize query
@@ -72,7 +72,7 @@ public class DataServlet extends HttpServlet {
     response.setContentType("text/html");
     response.getWriter().println("");
 
-    // Redirect back to the HTML page.
+    // Redirect back to the front-page.
     response.sendRedirect("/index.html");
   }
 

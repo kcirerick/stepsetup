@@ -101,11 +101,14 @@ function fetchRandQuote() {
 }
 
 function addComment() {
+  var numComments = document.getElementById("numQuotes").value;
+  document.getElementById("quote-container").innerHTML='';
   fetch('/data').then(response => response.json()).then((comments) => {
-    comments.forEach(comment => {
-    commentDiv = document.getElementById('quote-container');
-    commentDiv.appendChild(createListElement(comment));
-    });
+    for(i = 0; i < numComments; i++) {
+      comment = comments[i];
+      commentDiv = document.getElementById('quote-container');
+      commentDiv.appendChild(createListElement(comment));
+    };
   });
 }
 
