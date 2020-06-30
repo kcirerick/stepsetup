@@ -99,3 +99,16 @@ function fetchRandQuote() {
         document.getElementById('quote-container').innerText = quotes[1]
     });
 }
+
+function addComment() {
+    fetch('/data').then(response => response.json()).then((comment) => {
+        document.getElementById('quote-container').innerText = comment;
+    });
+}
+
+/** Creates an <li> element containing text. */
+function createListElement(text) {
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
+}

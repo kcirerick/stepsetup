@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body>
+  <body onload="addComment()">
       <div class="topnav">
         <a class="active" href="index.html">Home</a>
         <a href="personal.html">Personal</a>
@@ -15,9 +15,15 @@
     </div>
     <div id="header">
         <h1>Erick Enriquez</h1>
-        <p>This portfolio contains a bunch of random information about Erick's Life. If you are not interested in his life, perhaps you may be interested in some random quotes.</p>
+        <p>This portfolio contains a bunch of random information about Erick's Life. If you are not interested in his life,
+            perhaps you may be interest in creating some quotes.</p>
         <button id="genquote" onclick="fetchRandQuote()">Give Me Wisdom</button>
         <div id="quote-container"></div>
+        <form action="/data" method="post">
+            <p>Add a quote: </p>
+            <input type="text" name="comment" value="">
+            <br/> 
+        </form>
     </div>
     <div class="float-container">
         <div class = "float-child" id="float1">

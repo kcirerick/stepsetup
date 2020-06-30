@@ -25,26 +25,31 @@ import java.util.ArrayList;
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
+    private String quote = "";
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-      // Build ArrayList
-      ArrayList<String> kis = new ArrayList<String>();
-      kis.add("Keep");
-      kis.add("it");
-      kis.add("simple");
-
-      // Convert ArrayList to JSON
-      String json = convertToJsonUsingGson(kis);
-
       // Write response
       response.setContentType("text/json;");
+      String json = convertToJsonUsingGson(quote);
       response.getWriter().println(json);
   }
 
-  private String convertToJsonUsingGson(ArrayList<String> arr) {
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+      String comment = request.getParameter("comment");
+      quote = comment;
+
+      response.setContentType("text/html");
+      response.getWriter().println("Thanks for your input.");
+
+      // Redirect back to the HTML page.
+      response.sendRedirect("/index.html");
+  }
+
+  private String convertToJsonUsingGson(String quote) {
     Gson gson = new Gson();
-    String json = gson.toJson(arr);
+    String json = gson.toJson(quote);
     return json;
   }
 }
