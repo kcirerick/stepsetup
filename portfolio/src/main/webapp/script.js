@@ -97,14 +97,6 @@ function showSlides(n) {
   dots[slideIndex-1].className += " active";
 }
 
-/** Retrieves specific quote from datastore quotes.
- * EDIT: may no longer work with user-specified max quantity. */
-function fetchRandQuote() {
-  fetch('/data').then(response => response.json()).then((quotes) => {
-    document.getElementById('quote-container').innerText = quotes[1] //Currently hard-coded, randomization trivial
-  });
-}
-
 /** Copies specified number of user-created quotes onto site from datastore. */
 function updateQuotes(maxQuotes = 5) {
   // Reset quotes

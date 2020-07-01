@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 
-/** Servlet that returns some example content. */
+/** Servlet that returns user-generated quotes.*/
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
   private DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -36,7 +36,7 @@ public class DataServlet extends HttpServlet {
   /** Retrieves user-generated quotes from datastore to load onto page. */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // Initialize allQuotes and maxQuotes
+    // Initialize allQuotes
     ArrayList<String> allQuotes = new ArrayList<>();
 
     // Initialize query
