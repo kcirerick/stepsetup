@@ -50,6 +50,7 @@ function addRandomQuote() {
   document.getElementById('genquote').innerText = genButton;
 }
 
+/** Create hover effect on given elements. */
 function filterOn(element) {
   element.style.filter = "grayscale(100%)";
 }
@@ -66,7 +67,7 @@ function normalFont(element) {
   element.style.fontSize = "100%";
 }
 
-/* Slideshow. */
+/** Slideshow. */
 var slideIndex = 1;
 showSlides(slideIndex);
 
@@ -78,6 +79,8 @@ function currentSlide(n) {
   showSlides(slideIndex = n);
 }
 
+/** Displays slideshow by setting specified dot and picture as active
+ * and all others as inactive. */
 function showSlides(n) {
   var i;
   var slides = document.getElementsByClassName("mySlides");
@@ -94,20 +97,23 @@ function showSlides(n) {
   dots[slideIndex-1].className += " active";
 }
 
+/** Retrieves specific quote from datastore quotes.
+ * EDIT: may no longer work with user-specified max quantity. */
 function fetchRandQuote() {
   fetch('/data').then(response => response.json()).then((quotes) => {
-    document.getElementById('quote-container').innerText = quotes[1]
+    document.getElementById('quote-container').innerText = quotes[1] //Currently hard-coded, randomization trivial
   });
 }
 
-function addComment() {
-  var numComments = document.getElementById("numQuotes").value;
+/** Copies specified number of user-created quotes onto site from datastore. */
+function updateQuotes() {
+  var numQuotes = document.getElementById("numQuotes").value;
   document.getElementById("quote-container").innerHTML='';
-  fetch('/data').then(response => response.json()).then((comments) => {
-    for(i = 0; i < numComments; i++) {
-      comment = comments[i];
-      commentDiv = document.getElementById('quote-container');
-      commentDiv.appendChild(createListElement(comment));
+  fetch('/data').then(response => response.json()).then((quotes) => {
+    for(i = 0; i < numQuotes; i++) {
+      quote = quotes[i];
+      quoteDiv = document.getElementById('quote-container');
+      quoteDiv.appendChild(createListElement(quote));
     };
   });
 }

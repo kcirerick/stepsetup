@@ -32,7 +32,7 @@ import java.util.ArrayList;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
   private DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-  private int maxQuotes;
+  private int maxQuotes = 1;
 
   /** Retrieves user-generated quotes from datastore to load onto page. */
   @Override
@@ -48,6 +48,9 @@ public class DataServlet extends HttpServlet {
     for (Entity entity : results.asIterable()) {
       String curr = (String) entity.getProperty("content");
       allQuotes.add(curr);
+      if(allQuotes.size() == maxQuotes) {
+          break;
+      }
     }
 
     // Set response and return JSON.
@@ -95,7 +98,7 @@ public class DataServlet extends HttpServlet {
     // Check that the input is between 1 and 5.
     if (maxQ < 1 || maxQ > 5) {
       System.err.println("Player choice is out of range: " + maxQuotesString);
-      return -1;
+      return 1;
     }
 
     return maxQ;
