@@ -106,10 +106,12 @@ function fetchRandQuote() {
 }
 
 /** Copies specified number of user-created quotes onto site from datastore. */
-function updateQuotes() {
+function updateQuotes(maxQuotes = 5) {
+  // Reset quotes
   var quoteDiv = document.getElementById("quote-container");
   quoteDiv.innerHTML='';
-  var maxQuotes = document.getElementById("numQuotes").value;
+
+  //Write quotes to quoteDiv
   fetch('/data').then(response => response.json()).then((quotes) => {
       if(quotes.length < maxQuotes) {maxQuotes = quotes.length}
       for(i = 0; i < maxQuotes; i++) {
@@ -118,9 +120,19 @@ function updateQuotes() {
   });
 }
 
+/** Update number of quotes visible on the page */
+function updateQuoteNum() {
+    updateQuotes(document.getElementById("numQuotes").value);
+}
+
 /** Creates an <p> element containing text. */
 function createPElement(text) {
   const pElement = document.createElement('p');
   pElement.innerText = text;
   return pElement;
+}
+
+/** Deletes comments from datastore and refreshes page. */
+function deleteComments() {
+    fetch('/delete-data')
 }
