@@ -34,7 +34,7 @@ import java.util.ArrayList;
 public class DataServlet extends HttpServlet {
   private DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
-  /** Retrieves user-generated quotes from datastore to load onto page. */
+  /** Retrieves user-generated quotes from datastore to load onto page each time page is refreshed. */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Initialize allQuotes
@@ -56,7 +56,8 @@ public class DataServlet extends HttpServlet {
     response.getWriter().println(json);
   }
 
-  /** Retrieves comments from request form to store in datastore. */
+  /** Retrieves comments from request form to store in datastore.
+   * Function finishes with a redirect call to /index.html which will effectively call doGet().*/
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     //Retrieve comment and comment quantity
