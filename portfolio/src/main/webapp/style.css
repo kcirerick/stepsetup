@@ -107,9 +107,9 @@ form {
 }
 
 label {
-  font-size: 32px;
-  -webkit-text-stroke: 0px black;
-  -webkit-text-fill-color: black;
+  font-size: 42px;
+  -webkit-text-stroke: 3px black;
+  -webkit-text-fill-color: white;
 }
 /* Front page images. */
 .image {
