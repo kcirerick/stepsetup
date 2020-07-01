@@ -40,7 +40,7 @@ public class DataServlet extends HttpServlet {
     ArrayList<String> allQuotes = new ArrayList<>();
 
     // Initialize query
-    Query query = new Query("comment").addSort("content", SortDirection.ASCENDING);
+    Query query = new Query("quote").addSort("content", SortDirection.ASCENDING);
     PreparedQuery results = datastore.prepare(query);
 
     // Copy datastore comments into allQuotes
@@ -59,10 +59,10 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     //Retrieve comment and comment quantity
-    String comment = request.getParameter("comment");
+    String comment = request.getParameter("quote");
 
     //Create entity for datastore.
-    Entity commentEntity = new Entity("comment");
+    Entity commentEntity = new Entity("quote");
     commentEntity.setProperty("content", comment);
 
     //Store entity.
@@ -75,7 +75,7 @@ public class DataServlet extends HttpServlet {
     // Redirect back to the front-page.
     response.sendRedirect("/index.html");
   }
-  
+
   /* 
    * Converts ArrayList of Strings to JSON using GSON. 
    */

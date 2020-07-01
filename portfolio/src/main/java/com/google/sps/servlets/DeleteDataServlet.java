@@ -37,7 +37,7 @@ public class DeleteDataServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
     // Initialize query
-    Query query = new Query("comment").addSort("content", SortDirection.ASCENDING);
+    Query query = new Query("quote").addSort("content", SortDirection.ASCENDING);
     PreparedQuery results = datastore.prepare(query);
 
     // Copy datastore comments into allQuotes
