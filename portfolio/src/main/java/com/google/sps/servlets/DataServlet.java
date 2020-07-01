@@ -31,7 +31,8 @@ import java.util.ArrayList;
 /** Servlet that returns some example content. */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-  DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+  private DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+  private int maxQuotes;
 
   /** Retrieves user-generated quotes from datastore to load onto page. */
   @Override
@@ -58,8 +59,9 @@ public class DataServlet extends HttpServlet {
   /** Retrieves comments from request form to store in datastore. */
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    //Retrieve comment
+    //Retrieve comment and comment quantity
     String comment = request.getParameter("comment");
+    maxQuotes = getMaxQuotes(request);
 
     //Create entity for datastore.
     Entity commentEntity = new Entity("comment");
@@ -74,6 +76,29 @@ public class DataServlet extends HttpServlet {
 
     // Redirect back to the front-page.
     response.sendRedirect("/index.html");
+  }
+
+  /** Returns the choice entered by the player, or -1 if the choice was invalid. */
+  private int getMaxQuotes(HttpServletRequest request) {
+    // Get the input from the form.
+    String maxQuotesString = request.getParameter("max-quotes");
+
+    // Convert the input to an int.
+    int maxQ;
+    try {
+      maxQ = Integer.parseInt(maxQuotesString);
+    } catch (NumberFormatException e) {
+      System.err.println("Could not convert to int: " + maxQuotesString);
+      return -1;
+    }
+
+    // Check that the input is between 1 and 5.
+    if (maxQ < 1 || maxQ > 5) {
+      System.err.println("Player choice is out of range: " + maxQuotesString);
+      return -1;
+    }
+
+    return maxQ;
   }
 
   /* 
