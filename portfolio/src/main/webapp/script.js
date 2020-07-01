@@ -105,16 +105,16 @@ function updateQuotes(maxQuotes = 5) {
 
   //Write quotes to quoteDiv
   fetch('/data').then(response => response.json()).then((quotes) => {
-      if(quotes.length < maxQuotes) {maxQuotes = quotes.length}
-      for(i = 0; i < maxQuotes; i++) {
-          quoteDiv.appendChild(createPElement(quotes[i]));
-      }
+    if(quotes.length < maxQuotes) {maxQuotes = quotes.length}
+    for(i = 0; i < maxQuotes; i++) {
+      quoteDiv.appendChild(createPElement(quotes[i]));
+    }
   });
 }
 
 /** Update number of quotes visible on the page */
 function updateQuoteNum() {
-    updateQuotes(document.getElementById("numQuotes").value);
+  updateQuotes(document.getElementById("numQuotes").value);
 }
 
 /** Creates an <p> element containing text. */
@@ -126,5 +126,5 @@ function createPElement(text) {
 
 /** Deletes comments from datastore and refreshes page. */
 function deleteComments() {
-    fetch('/delete-data')
+  fetch('/delete-data')
 }
