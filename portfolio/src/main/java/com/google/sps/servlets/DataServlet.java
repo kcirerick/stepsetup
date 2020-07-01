@@ -32,12 +32,11 @@ import java.util.ArrayList;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
   private DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-  private int maxQuotes = 1;
 
   /** Retrieves user-generated quotes from datastore to load onto page. */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // Initialize allQuotes
+    // Initialize allQuotes and maxQuotes
     ArrayList<String> allQuotes = new ArrayList<>();
 
     // Initialize query
@@ -48,9 +47,6 @@ public class DataServlet extends HttpServlet {
     for (Entity entity : results.asIterable()) {
       String curr = (String) entity.getProperty("content");
       allQuotes.add(curr);
-      if(allQuotes.size() == maxQuotes) {
-          break;
-      }
     }
 
     // Set response and return JSON.
@@ -64,7 +60,6 @@ public class DataServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     //Retrieve comment and comment quantity
     String comment = request.getParameter("comment");
-    maxQuotes = getMaxQuotes(request);
 
     //Create entity for datastore.
     Entity commentEntity = new Entity("comment");
@@ -81,10 +76,10 @@ public class DataServlet extends HttpServlet {
     response.sendRedirect("/index.html");
   }
 
-  /** Returns the choice entered by the player, or -1 if the choice was invalid. */
+  /** Returns the choice entered by the player, or -1 if the choice was invalid. 
   private int getMaxQuotes(HttpServletRequest request) {
     // Get the input from the form.
-    String maxQuotesString = request.getParameter("max-quotes");
+    String maxQuotesString = request.getParameter("quantity");
 
     // Convert the input to an int.
     int maxQ;
@@ -92,18 +87,18 @@ public class DataServlet extends HttpServlet {
       maxQ = Integer.parseInt(maxQuotesString);
     } catch (NumberFormatException e) {
       System.err.println("Could not convert to int: " + maxQuotesString);
-      return -1;
+      return maxQuotes;
     }
 
     // Check that the input is between 1 and 5.
     if (maxQ < 1 || maxQ > 5) {
-      System.err.println("Player choice is out of range: " + maxQuotesString);
-      return 1;
+      System.err.println("Choice is out of range: " + maxQuotesString);
+      return maxQuotes;
     }
 
     return maxQ;
   }
-
+*/
   /* 
    * Converts ArrayList of Strings to JSON using GSON. 
    */

@@ -107,20 +107,20 @@ function fetchRandQuote() {
 
 /** Copies specified number of user-created quotes onto site from datastore. */
 function updateQuotes() {
-  var numQuotes = document.getElementById("numQuotes").value;
-  document.getElementById("quote-container").innerHTML='';
+  var quoteDiv = document.getElementById("quote-container");
+  quoteDiv.innerHTML='';
+  var maxQuotes = document.getElementById("numQuotes").value;
   fetch('/data').then(response => response.json()).then((quotes) => {
-    for(i = 0; i < numQuotes; i++) {
-      quote = quotes[i];
-      quoteDiv = document.getElementById('quote-container');
-      quoteDiv.appendChild(createListElement(quote));
-    };
+      if(quotes.length < maxQuotes) {maxQuotes = quotes.length}
+      for(i = 0; i < maxQuotes; i++) {
+          quoteDiv.appendChild(createPElement(quotes[i]));
+      }
   });
 }
 
-/** Creates an <li> element containing text. */
-function createListElement(text) {
-  const liElement = document.createElement('li');
-  liElement.innerText = text;
-  return liElement;
+/** Creates an <p> element containing text. */
+function createPElement(text) {
+  const pElement = document.createElement('p');
+  pElement.innerText = text;
+  return pElement;
 }
