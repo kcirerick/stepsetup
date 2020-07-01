@@ -93,3 +93,9 @@ function showSlides(n) {
   slides[slideIndex-1].style.display = "block";  
   dots[slideIndex-1].className += " active";
 }
+
+function fetchRandQuote() {
+    fetch('/data').then(response => response.text()).then((quote) => {
+        document.getElementById('quote-container').innerText = quote
+    });
+}
