@@ -17,27 +17,29 @@
       <h1>Erick Enriquez</h1>
       <p>This portfolio contains a bunch of random information about Erick's Life. If you are not interested in his life,
             perhaps you may be interest in creating some quotes.</p>
-      <form action="/data" onchange="updateQuoteNum()">
-        <label for="numQuotes">Please enter how many quotes you would like to display (between 1 and 5).</label>
+      <div id="commentBox">
+        <form action="/data" onchange="updateQuoteNum()">
+          <label for="numQuotes">Please enter how many quotes you would like to display (between 1 and 5).</label>
+          <br>
+          <input type="number" id="numQuotes" name="quantity" min="1" max="5" value="5">
+          <br>
+        </form>
+        <form action="/data" method="post">
+          <label for="quoteBox">Add a quote:</label>
+          <br>
+          <input id="quoteBox" type="text" name="quote" value="">
+          <br> 
+        </form>
         <br>
-        <input type="number" id="numQuotes" name="quantity" min="1" max="5" value="5">
+        <div id="quote-container"></div>
         <br>
-      </form>
-      <form action="/data" method="post">
-        <label for="quoteBox">Add a quote:</label>
-        <br>
-        <input id="quoteBox" type="text" name="quote" value="">
-        <br> 
-      </form>
-      <br>
-      <div id="quote-container"></div>
-      <br>
-      <form action="/delete-data" method="post">
-        <label for="quoteDel">Delete Quotes</label>
-        <br>
-        <input type="submit" id="quoteDel" name="deleteQuotes" value="Delete">
-        <br>
-      </form>
+        <form action="/delete-data" method="post">
+          <label for="quoteDel">Delete Quotes</label>
+          <br>
+          <input type="submit" id="quoteDel" name="deleteQuotes" value="Delete">
+          <br>
+        </form>
+      </div>
     </div>
     <div class="float-container">
       <div class = "float-child" id="float1">
