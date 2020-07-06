@@ -104,10 +104,10 @@ function updateQuotes(maxQuotes = 5) {
   quoteDiv.innerHTML='';
 
   //Write quotes to quoteDiv
-  fetch('/data').then(response => response.json()).then((quotes) => {
-    if(quotes.length < maxQuotes) {maxQuotes = quotes.length}
+  fetch('/data').then(response => response.json()).then((strResponse) => {
+    if(strResponse.length < maxQuotes) {maxQuotes = strResponse.length}
     for(i = 0; i < maxQuotes; i++) {
-      quoteDiv.appendChild(createPElement(quotes[i]));
+      quoteDiv.innerHTML += strResponse[i];
     }
   });
   fetchLogin();
@@ -135,7 +135,6 @@ function fetchLogin() {
     var commentBox = document.getElementById('commentBox');
     var loginPrompt = document.getElementById('loginPrompt');
     loginPrompt.innerHTML = "";
-    console.log("AHHHH");
     fetch('/login').then(response => response.json()).then((loginStatus) => {
         if(loginStatus[0] == "True") {
             commentBox.style.display = "block";
