@@ -26,6 +26,9 @@ html {
   -webkit-text-fill-color: white;
 }
 
+/* Hide comment box by default. */
+#commentBox{display: none}
+
 /* Add a black background color to the top navigation */
 .topnav {
   background-color: #333;
