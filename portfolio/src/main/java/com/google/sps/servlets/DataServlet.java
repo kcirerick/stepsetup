@@ -53,7 +53,6 @@ public class DataServlet extends HttpServlet {
       String email = (String) entity.getProperty("email");
       strResponse.add("<p>" + email + ": " + text + "</p>");
     }
-    System.out.println(strResponse);
 
     // Set response and return JSON.
     response.setContentType("text/json;");
