@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body onload="updateQuotes()">
+  <body onload="updateQuotes();">
     <div class="topnav">
       <a class="active" href="index.html">Home</a>
       <a href="personal.html">Personal</a>
@@ -17,8 +17,9 @@
       <h1>Erick Enriquez</h1>
       <p>This portfolio contains a bunch of random information about Erick's Life. If you are not interested in his life,
             perhaps you may be interest in creating some quotes.</p>
+      <div id="loginPrompt"></div>
       <div id="commentBox">
-        <form action="/data" onchange="updateQuoteNum()">
+        <form action="/data" onchange="updateQuoteNum();">
           <label for="numQuotes">Please enter how many quotes you would like to display (between 1 and 5).</label>
           <br>
           <input type="number" id="numQuotes" name="quantity" min="1" max="5" value="5">
@@ -28,6 +29,7 @@
           <label for="quoteBox">Add a quote:</label>
           <br>
           <input id="quoteBox" type="text" name="quote" value="">
+          <input type="submit" id="quoteSubmit" name="submitQuotes" value="Submit">
           <br> 
         </form>
         <br>

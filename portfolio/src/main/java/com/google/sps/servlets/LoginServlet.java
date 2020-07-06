@@ -21,28 +21,47 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import com.google.gson.Gson;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("text/html");
 
     UserService userService = UserServiceFactory.getUserService();
+    ArrayList<String> strResponse = new ArrayList<>();
+
     if (userService.isUserLoggedIn()) {
       String userEmail = userService.getCurrentUser().getEmail();
       String urlToRedirectToAfterUserLogsOut = "/";
       String logoutUrl = userService.createLogoutURL(urlToRedirectToAfterUserLogsOut);
 
-      response.getWriter().println("<p>Hello " + userEmail + "!</p>");
-      response.getWriter().println("<p>Logout <a href=\"" + logoutUrl + "\">here</a>.</p>");
+      strResponse.add("True");
+      strResponse.add("<p>Hello " + userEmail + "!</p>");
+      strResponse.add("<p>Logout <a href=\"" + logoutUrl + "\">here</a>.</p>");
     } else {
       String urlToRedirectToAfterUserLogsIn = "/";
       String loginUrl = userService.createLoginURL(urlToRedirectToAfterUserLogsIn);
 
-      response.getWriter().println("<p>Hello stranger.</p>");
-      response.getWriter().println("<p>Login <a href=\"" + loginUrl + "\">here</a>.</p>");
+      strResponse.add("False");
+      strResponse.add("<p>You must login to create quotes.</p>");
+      strResponse.add("<p>Login <a href=\"" + loginUrl + "\">here</a>.</p>");
     }
+
+    // Set response and return JSON.
+      response.setContentType("text/json;");
+      String json = convertToJsonUsingGson(strResponse);
+      response.getWriter().println(json);
+  }
+ 
+  /* 
+   * Converts ArrayList of Strings to JSON using GSON. 
+   */
+  private String convertToJsonUsingGson(ArrayList<String> stringResponse) {
+    Gson gson = new Gson();
+    String json = gson.toJson(stringResponse);
+    return json;
   }
 }

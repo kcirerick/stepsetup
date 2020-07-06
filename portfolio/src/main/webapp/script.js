@@ -110,6 +110,7 @@ function updateQuotes(maxQuotes = 5) {
       quoteDiv.appendChild(createPElement(quotes[i]));
     }
   });
+  fetchLogin();
 }
 
 /** Update number of quotes visible on the page */
@@ -126,5 +127,23 @@ function createPElement(text) {
 
 /** Deletes comments from datastore and refreshes page. */
 function deleteComments() {
-  fetch('/delete-data')
+  fetch('/delete-data');
+}
+
+/**  */
+function fetchLogin() {
+    var commentBox = document.getElementById('commentBox');
+    var loginPrompt = document.getElementById('loginPrompt');
+    loginPrompt.innerHTML = "";
+    console.log("AHHHH");
+    fetch('/login').then(response => response.json()).then((loginStatus) => {
+        if(loginStatus[0] == "True") {
+            commentBox.style.display = "block";
+        } else {
+            commentBox.style.display = "none";
+        }
+        for(i = 1; i < loginStatus.length; i++) {
+            loginPrompt.innerHTML += loginStatus[i];
+        }
+    });
 }
