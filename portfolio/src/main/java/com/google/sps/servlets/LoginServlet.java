@@ -38,9 +38,17 @@ public class LoginServlet extends HttpServlet {
       String urlToRedirectToAfterUserLogsOut = "/";
       String logoutUrl = userService.createLogoutURL(urlToRedirectToAfterUserLogsOut);
 
+      // If user has not set a nickname, redirect to nickname page
+      String nickname = getUserNickname(userService.getCurrentUser().getUserId());
+      if (nickname == null) {
+        response.sendRedirect("/nickname.html");
+        return;
+      }
+
       strResponse.add("True");
-      strResponse.add("<p>Hello " + userEmail + "!</p>");
+      strResponse.add("<p>Hello " + nickname + "!</p>");
       strResponse.add("<p>Logout <a href=\"" + logoutUrl + "\">here</a>.</p>");
+      strResponse.add("<p>Change your nickname <a href=\"/nickname.html\">here</a>.</p>");
     } else {
       String urlToRedirectToAfterUserLogsIn = "/";
       String loginUrl = userService.createLoginURL(urlToRedirectToAfterUserLogsIn);

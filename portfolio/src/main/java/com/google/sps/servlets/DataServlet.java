@@ -43,6 +43,11 @@ public class DataServlet extends HttpServlet {
     // Initialize strResponse
     ArrayList<String> strResponse = new ArrayList<>();
 
+    UserService userService = UserServiceFactory.getUserService();
+
+    // If user is not logged in, show a login form (could also redirect to a login page)
+    if (!userService.isUserLoggedIn()) return;
+
     // Initialize query
     Query query = new Query("comment").addSort("timestamp", SortDirection.DESCENDING);
     PreparedQuery results = datastore.prepare(query);
@@ -50,7 +55,7 @@ public class DataServlet extends HttpServlet {
     // Copy datastore comments into strResponse
     for (Entity entity : results.asIterable()) {
       String text = (String) entity.getProperty("content");
-      String email = (String) entity.getProperty("email");
+      String currNickName = (String) entity.getProperty("email");
       strResponse.add("<p>" + email + ": " + text + "</p>");
     }
 
@@ -93,6 +98,21 @@ public class DataServlet extends HttpServlet {
     Gson gson = new Gson();
     String json = gson.toJson(quotes);
     return json;
+  }
+
+  /** Returns the nickname of the user with id, or null if the user has not set a nickname. */
+  private String getUserNickname(String id) {
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    Query query =
+        new Query("UserInfo")
+            .setFilter(new Query.FilterPredicate("id", Query.FilterOperator.EQUAL, id));
+    PreparedQuery results = datastore.prepare(query);
+    Entity entity = results.asSingleEntity();
+    if (entity == null) {
+      return null;
+    }
+    String nickname = (String) entity.getProperty("nickname");
+    return nickname;
   }
 }
 
