@@ -6,61 +6,78 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body>
-      <div class="topnav">
-        <a class="active" href="index.html">Home</a>
-        <a href="personal.html">Personal</a>
-        <a href="hobbies.html">Hobbies</a>
-        <a href="professional.html">Professional</a>
+  <body onload="updateQuotes()">
+    <div class="topnav">
+      <a class="active" href="index.html">Home</a>
+      <a href="personal.html">Personal</a>
+      <a href="hobbies.html">Hobbies</a>
+      <a href="professional.html">Professional</a>
     </div>
     <div id="header">
-        <h1>Erick Enriquez</h1>
-        <p>This portfolio contains a bunch of random information about Erick's Life. If you are not interested in his life, perhaps you may be interested in some random quotes.</p>
-        <button id="genquote" onclick="fetchRandQuote()">Give Me Wisdom</button>
-        <div id="quote-container"></div>
+      <h1>Erick Enriquez</h1>
+      <p>This portfolio contains a bunch of random information about Erick's Life. If you are not interested in his life,
+            perhaps you may be interest in creating some quotes.</p>
+      <form action="/data" onchange="updateQuoteNum()">
+        <label for="numQuotes">Please enter how many quotes you would like to display (between 1 and 5).</label>
+        <br>
+        <input type="number" id="numQuotes" name="quantity" min="1" max="5" value="5">
+        <br>
+      </form>
+      <form action="/data" method="post">
+        <label for="quoteBox">Add a quote:</label>
+        <br>
+        <input id="quoteBox" type="text" name="quote" value="">
+        <br> 
+      </form>
+      <br>
+      <div id="quote-container"></div>
+      <br>
+      <form action="/delete-data" method="post">
+        <label for="quoteDel">Delete Quotes</label>
+        <br>
+        <input type="submit" id="quoteDel" name="deleteQuotes" value="Delete">
+        <br>
+      </form>
     </div>
     <div class="float-container">
-        <div class = "float-child" id="float1">
-            <p id="percap">Personal Life</p>
-            <a href="personal.html" onmouseenter="filterOn(this)" onmouseleave="filterOff(this)">
-                <img class="image" id="personal" src="images/friends.jpg"/>
-            </a>
-        </div>
-        <div class = "float-child" id="float2">
-            <p id="hobcap">Hobbies</p>
-            <a href="hobbies.html" onmouseenter="filterOn(this)" onmouseleave="filterOff(this)">
-                <img class="image" id="hobbies "src="images/hstand.JPG"/>
-            </a>
-        </div>
-        <div class = "float-child" id="float3">
-            <p id="profcap">Professional Life</p>
-            <a href="professional.html" onmouseenter="filterOn(this)" onmouseleave="filterOff(this)">
-                <img class="image"id="professional" src="images/headshot.jpg"/>
-            </a>
-        </div>
+      <div class = "float-child" id="float1">
+        <p id="percap">Personal Life</p>
+        <a href="personal.html" onmouseenter="filterOn(this)" onmouseleave="filterOff(this)">
+        <img class="image" id="personal" src="images/friends.jpg"/></a>
+      </div>
+      <div class = "float-child" id="float2">
+        <p id="hobcap">Hobbies</p>
+        <a href="hobbies.html" onmouseenter="filterOn(this)" onmouseleave="filterOff(this)">
+        <img class="image" id="hobbies "src="images/hstand.JPG"/></a>
+      </div>
+      <div class = "float-child" id="float3">
+        <p id="profcap">Professional Life</p>
+        <a href="professional.html" onmouseenter="filterOn(this)" onmouseleave="filterOff(this)">
+        <img class="image"id="professional" src="images/headshot.jpg"/></a>
+      </div>
     </div>
     <div> 
-        <p id="crisistext"> On a more serious note, there's a lot going on in the world right now, here's a few of the situations you can learn more about:</p>
+      <p id="crisistext"> On a more serious note, there's a lot going on in the world right now, here's a few of the situations you can learn more about:</p>
     </div>
     <div class="float-container">
-        <div class = "cards" onmouseenter="largerFont(this)" onmouseleave="normalFont(this)">
-            <a href="https://blacklivesmatter.carrd.co">BLM</a>
-        </div>
-        <div class = "cards" onmouseenter="largerFont(this)" onmouseleave="normalFont(this)">
-            <a href="https://yemencrisis.carrd.co">Yemen Crisis</a>
-        </div>
-        <div class = "cards" onmouseenter="largerFont(this)" onmouseleave="normalFont(this)">
-            <a href="https://standwithhongkong.carrd.co">Hong Kong</a>
-        </div>
-        <div class = "cards" onmouseenter="largerFont(this)" onmouseleave="normalFont(this)">
-            <a href="https://helppalestine.carrd.co">Palestine</a>
-        </div>
-        <div class = "cards" onmouseenter="largerFont(this)" onmouseleave="normalFont(this)">
-            <a href="https://junkterrorbill.carrd.co">Philippines</a>
-        </div>
-        <div class = "cards" onmouseenter="largerFont(this)" onmouseleave="normalFont(this)">
-            <a href="https://indianaid.carrd.co">India</a>
-        </div>
+      <div class = "cards" onmouseenter="largerFont(this)" onmouseleave="normalFont(this)">
+        <a href="https://blacklivesmatter.carrd.co">BLM</a>
+      </div>
+      <div class = "cards" onmouseenter="largerFont(this)" onmouseleave="normalFont(this)">
+        <a href="https://yemencrisis.carrd.co">Yemen Crisis</a>
+      </div>
+      <div class = "cards" onmouseenter="largerFont(this)" onmouseleave="normalFont(this)">
+        <a href="https://standwithhongkong.carrd.co">Hong Kong</a>
+      </div>
+      <div class = "cards" onmouseenter="largerFont(this)" onmouseleave="normalFont(this)">
+        <a href="https://helppalestine.carrd.co">Palestine</a>
+      </div>
+      <div class = "cards" onmouseenter="largerFont(this)" onmouseleave="normalFont(this)">
+        <a href="https://junkterrorbill.carrd.co">Philippines</a>
+      </div>
+      <div class = "cards" onmouseenter="largerFont(this)" onmouseleave="normalFont(this)">
+        <a href="https://indianaid.carrd.co">India</a>
+      </div>
     </div>
   </body>
 </html>

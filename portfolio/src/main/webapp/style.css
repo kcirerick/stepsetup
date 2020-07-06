@@ -20,135 +20,147 @@ html {
 }
 
 #header {
-    font-size: 56px;
-    text-align:center;
-    -webkit-text-stroke: 3px black;
-    -webkit-text-fill-color: white;
+  font-size: 56px;
+  text-align:center;
+  -webkit-text-stroke: 3px black;
+  -webkit-text-fill-color: white;
 }
 
 /* Add a black background color to the top navigation */
 .topnav {
-    background-color: #333;
-    overflow: hidden;
+  background-color: #333;
+  overflow: hidden;
 }
 
 /* Style the links inside the navigation bar */
 .topnav a {
-    color: #f2f2f2;
-    float: left;
-    font-size: 17px;
-    padding: 14px 16px;
-    text-align: center;
-    text-decoration: none;
-    -webkit-text-stroke: 0px black;
-    -webkit-text-fill-color: white;
+  color: #f2f2f2;
+  float: left;
+  font-size: 17px;
+  padding: 14px 16px;
+  text-align: center;
+  text-decoration: none;
+  -webkit-text-stroke: 0px black;
+  -webkit-text-fill-color: white;
 }
 
 /* Change the color of links on hover */
 .topnav a:hover {
-    background-color: #ddd;
-    color: black;
+  background-color: #ddd;
+  color: black;
 }
 
 /* Add a color to the active/current link */
 .topnav a.active {
-    background-color: #fabf0c;
-    color: white;
+  background-color: #fabf0c;
+  color: white;
 }
 
 /* Tag styles. */
 a {
-    color:inherit;
-    font: inherit;
-    text-shadow: inherit;
-    -webkit-text-stroke: 3px black;
-    -webkit-text-fill-color: white;
+  color:inherit;
+  font: inherit;
+  text-shadow: inherit;
+  -webkit-text-stroke: 3px black;
+  -webkit-text-fill-color: white;
 }
 
 p {
-    font-size: 40px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
+  font-size: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
 }
  
 /* Quote button. */
 #genquote {
-    -webkit-text-stroke: 0px black;
-    -webkit-text-fill-color: black;
+  -webkit-text-stroke: 0px black;
+  -webkit-text-fill-color: black;
 }
 
 #quote-container {
-    font-size: 50px;
+  font-size: 50px;
 }
 
 /* Container for grouping elements. */ 
 .float-container {
-    display:flex;
-    justify-content:space-around;
-    margin: 0 auto;
-    margin-top: 30px;
-    text-align: left;
-    width: 50vw;
+  display:flex;
+  justify-content:space-around;
+  margin: 0 auto;
+  margin-top: 30px;
+  text-align: left;
+  width: 50vw;
 }
 
 .float-child {
-    display: inline-block;
-    position: relative;
-    text-align:center;
-    -webkit-text-stroke: 3px black;
-    -webkit-text-fill-color: white;
+  display: inline-block;
+  position: relative;
+  text-align:center;
+  -webkit-text-stroke: 3px black;
+  -webkit-text-fill-color: white;
+}
+
+form {
+  font-size: 6px;
+  -webkit-text-stroke: 0px black;
+  -webkit-text-fill-color: black;
+}
+
+label {
+  font-size: 42px;
+  -webkit-text-stroke: 3px black;
+  -webkit-text-fill-color: white;
 }
 
 /* Front page images. */
 .image {
-    border: 5px #333;
-    border-style: ridge;
-    float:left;
-    height: auto;
-    max-width:100%;
-    width: 250px;
+  border: 5px #333;
+  border-style: ridge;
+  float:left;
+  height: auto;
+  max-width:100%;
+  width: 250px;
 }
  
 #hobbies {
-    height: auto;
-    margin: 100px; 
-    width: auto; 
+  height: auto;
+  margin: 100px; 
+  width: auto; 
 }
 
 #percap {
-    left: -25px;
-    position: inherit;
-    top: 400px;
+  left: -25px;
+  position: inherit;
+  top: 400px;
 }
 
 #hobcap {
-    position: inherit;
-    top: 25px;
+  position: inherit;
+  top: 25px;
 }
 
 #profcap {
-    left: -60px;
-    position: inherit;
-    top: 325px;
-    text-align: center;
+  left: -60px;
+  position: inherit;
+  top: 325px;
+  text-align: center;
 }
 
 /* Crisis info style. */
 #crisistext {
-    margin-top: 120px;
-    text-align: center;
-    font-size: 50px;
-    -webkit-text-stroke: 3px black;
-    -webkit-text-fill-color: white;
+  margin-top: 120px;
+  text-align: center;
+  font-size: 50px;
+  -webkit-text-stroke: 3px black;
+  -webkit-text-fill-color: white;
 }
 
 .cards {
-    margin-left: 15px;
+  margin-left: 15px;
 }
 
 h1 {
-    margin: auto;
-    width: 50%;
-    text-align: center;
+  margin: auto;
+  width: 50%;
+  text-align: center;
 }
