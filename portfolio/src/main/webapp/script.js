@@ -135,7 +135,7 @@ function deleteComments() {
 }
 
 /** Fetches login information and updates html within the
-  * loginPrompt div to reflect the login status. */
+ * loginPrompt div to reflect the login status. */
 function fetchLogin() {
     var commentBox = document.getElementById('commentBox');
     var loginPrompt = document.getElementById('loginPrompt');
