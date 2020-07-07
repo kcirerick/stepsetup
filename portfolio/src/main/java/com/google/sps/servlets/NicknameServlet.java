@@ -49,7 +49,7 @@ public class NicknameServlet extends HttpServlet {
     // The put() function automatically inserts new data or updates existing data based on ID
     datastore.put(entity);
 
-    response.sendRedirect("/login");
+    response.sendRedirect("/index.html");
   }
 
   /**

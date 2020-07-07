@@ -55,8 +55,9 @@ public class DataServlet extends HttpServlet {
     // Copy datastore comments into strResponse
     for (Entity entity : results.asIterable()) {
       String text = (String) entity.getProperty("content");
-      String currNickName = (String) entity.getProperty("email");
-      strResponse.add("<p>" + email + ": " + text + "</p>");
+      System.out.println(text);
+      String user = (String) entity.getProperty("user");
+      strResponse.add("<p>" + user + ": " + text + "</p>");
     }
 
     // Set response and return JSON.
@@ -73,14 +74,16 @@ public class DataServlet extends HttpServlet {
 
     UserService userService = UserServiceFactory.getUserService();
 
-    //Retrieve comment and comment quantity
+    //Retrieve comment, comment quantity, and current user.
     String comment = request.getParameter("quote");
     String email = userService.getCurrentUser().getEmail();
+    Entity user = getUser(userService.getCurrentUser().getUserId());
 
     //Create entity for datastore.
-    Entity commentEntity = new Entity("comment");
+    Entity commentEntity = new Entity("comment", user.getKey());
     commentEntity.setProperty("content", comment);
     commentEntity.setProperty("email", email);
+    commentEntity.setProperty("user", (String) user.getProperty("nickname"));
     commentEntity.setProperty("timestamp", System.currentTimeMillis());
 
     //Store entity.
@@ -100,8 +103,10 @@ public class DataServlet extends HttpServlet {
     return json;
   }
 
-  /** Returns the nickname of the user with id, or null if the user has not set a nickname. */
-  private String getUserNickname(String id) {
+  /**
+   * Returns the nickname of the user with id, or empty String if the user has not set a nickname.
+   */
+  private Entity getUser(String id) {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     Query query =
         new Query("UserInfo")
@@ -111,8 +116,7 @@ public class DataServlet extends HttpServlet {
     if (entity == null) {
       return null;
     }
-    String nickname = (String) entity.getProperty("nickname");
-    return nickname;
+    return entity;
   }
 }
 
