@@ -53,24 +53,24 @@ body {
 
 /* Change the color of links on hover */
 .topnav a:hover {
-    background-color: #ddd;
-    color: black;
+  background-color: #ddd;
+  color: black;
 }
 
 /* Add a color to the active/current link */
 .topnav a.active {
-    background-color: #fabf0c;
-    color: white;
+  background-color: #fabf0c;
+  color: white;
 }
 
 * {box-sizing: border-box}
 .mySlides {display: none}
 #first {display: block}
 img {
-    vertical-align: middle;
-    height: auto;
-    border: 6px solid #ddd;
-    border-radius: 10px;
+  vertical-align: middle;
+  height: auto;
+  border: 6px solid #ddd;
+  border-radius: 10px;
 }
 
 /* Slideshow container */
