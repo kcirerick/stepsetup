@@ -49,7 +49,7 @@ public class DeleteDataServlet extends HttpServlet {
     Filter userFilter = new FilterPredicate("user", FilterOperator.EQUAL, nickname);
 
     // Initialize query for entities of kind "quote" and gather results.
-    Query query = new Query("comment").setFilter(userFilter).addSort("content", SortDirection.ASCENDING);
+    Query query = new Query("comment").setFilter(userFilter).addSort("timestamp", SortDirection.ASCENDING);
     PreparedQuery results = datastore.prepare(query);
 
     // Delete all results.

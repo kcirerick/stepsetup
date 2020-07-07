@@ -55,7 +55,6 @@ public class DataServlet extends HttpServlet {
     // Copy datastore comments into strResponse
     for (Entity entity : results.asIterable()) {
       String text = (String) entity.getProperty("content");
-      System.out.println(text);
       String user = (String) entity.getProperty("user");
       strResponse.add("<p>" + user + ": " + text + "</p>");
     }
