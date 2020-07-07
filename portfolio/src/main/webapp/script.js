@@ -97,6 +97,12 @@ function showSlides(n) {
   dots[slideIndex-1].className += " active";
 }
 
+/** Initializes webpage with updates quotes, login status, and map features. */
+function updatePage() {
+    updateQuotes();
+    fetchLogin();
+    initMap();
+}
 /** Copies specified number of user-created quotes onto site from datastore. */
 function updateQuotes(maxQuotes = 5) {
   // Reset quotes
@@ -110,7 +116,6 @@ function updateQuotes(maxQuotes = 5) {
       quoteDiv.innerHTML += strResponse[i];
     }
   });
-  fetchLogin();
 }
 
 /** Update number of quotes visible on the page */
