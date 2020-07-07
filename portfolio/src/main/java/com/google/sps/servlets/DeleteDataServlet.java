@@ -16,6 +16,9 @@ package com.google.sps.servlets;
 
 import java.io.IOException;
 import com.google.gson.Gson;
+import com.google.appengine.api.datastore.Query.Filter;
+import com.google.appengine.api.datastore.Query.FilterPredicate;
+import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -27,6 +30,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 
 /** Servlet that deletes data from datastore. */
 @WebServlet("/delete-data")
@@ -35,9 +40,16 @@ public class DeleteDataServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    UserService userService = UserServiceFactory.getUserService();
+
+    Entity user = getUser(userService.getCurrentUser().getUserId());
+    String nickname = (String) user.getProperty("nickname");
+
+    //Initialize Filter
+    Filter userFilter = new FilterPredicate("user", FilterOperator.EQUAL, nickname);
 
     // Initialize query for entities of kind "quote" and gather results.
-    Query query = new Query("comment").addSort("content", SortDirection.ASCENDING);
+    Query query = new Query("comment").setFilter(userFilter).addSort("content", SortDirection.ASCENDING);
     PreparedQuery results = datastore.prepare(query);
 
     // Delete all results.
@@ -47,5 +59,21 @@ public class DeleteDataServlet extends HttpServlet {
 
     // Redirect back to the front-page.
     response.sendRedirect("/index.html");
+  }
+
+  /**
+   * Returns the nickname of the user with id, or empty String if the user has not set a nickname.
+   */
+  private Entity getUser(String id) {
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    Query query =
+        new Query("UserInfo")
+            .setFilter(new Query.FilterPredicate("id", Query.FilterOperator.EQUAL, id));
+    PreparedQuery results = datastore.prepare(query);
+    Entity entity = results.asSingleEntity();
+    if (entity == null) {
+      return null;
+    }
+    return entity;
   }
 }
