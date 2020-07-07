@@ -16,57 +16,58 @@
  * Adds a random greeting to the page.
  */
 function addRandomQuote() {
-    const quotes=
-      ['Life happens wherever you are, whether you make it or not.', 'Pride is not the opposite of shame, but its source.', 
-      'In the darkness, hope is something you give yourself.', 'If you keep moving you will come to a better place.',
-      'You must actively shape your own destiny and the destiny of the world.', 'We can\'t concern ourselves with what was. We must act on what is.',
-      'Anyone is capable of great good and great evil.', 
-      'you must look within yourself to save yourself from your other self, only then will you find your true self reveal itself'];
+  const quotes=
+    ['Life happens wherever you are, whether you make it or not.', 'Pride is not the opposite of shame, but its source.', 
+    'In the darkness, hope is something you give yourself.', 'If you keep moving you will come to a better place.',
+    'You must actively shape your own destiny and the destiny of the world.', 'We can\'t concern ourselves with what was. We must act on what is.',
+    'Anyone is capable of great good and great evil.', 
+    'you must look within yourself to save yourself from your other self, only then will you find your true self reveal itself'];
       
-    const buttonText = ['Give me more wisdom', 'MORE!!', 'Enlighten me again!', 'Teach me your ways.', 'Another one!', 'I like that, tell me another.'];
+  const buttonText = ['Give me more wisdom', 'MORE!!', 'Enlighten me again!', 'Teach me your ways.', 'Another one!', 'I like that, tell me another.'];
 
-    // Pick a random greeting.
-    let quote = quotes[Math.floor(Math.random() * quotes.length)];
+  // Pick a random greeting.
+  let quote = quotes[Math.floor(Math.random() * quotes.length)];
 
-    //Pick random button text.
-    let genButton = buttonText[Math.floor(Math.random() * buttonText.length)];
+  //Pick random button text.
+  let genButton = buttonText[Math.floor(Math.random() * buttonText.length)];
 
-    // Retrieve current quote.
-    currQuote = document.getElementById('quote-container').innerText;
-    currButton= document.getElementById('genquote').innerText;
+  // Retrieve current quote.
+  currQuote = document.getElementById('quote-container').innerText;
+  currButton= document.getElementById('genquote').innerText;
 
-    // Pick a random greeting until we get a new quote.
-    while(currQuote === quote) {
-        quote = quotes[Math.floor(Math.random() * quotes.length)];
-    }
+  // Pick a random greeting until we get a new quote.
+  while(currQuote === quote) {
+    quote = quotes[Math.floor(Math.random() * quotes.length)];
+  }
 
-    //Pick random button text until we get a new message.
-    while(currButton === genButton) {
-        genButton = buttonText[Math.floor(Math.random() * buttonText.length)];
-    }
+  //Pick random button text until we get a new message.
+  while(currButton === genButton) {
+    genButton = buttonText[Math.floor(Math.random() * buttonText.length)];
+  }
 
-    //Add new quote and button text to page.
-    document.getElementById('quote-container').innerText = quote;
-    document.getElementById('genquote').innerText = genButton;
+  //Add new quote and button text to page.
+  document.getElementById('quote-container').innerText = quote;
+  document.getElementById('genquote').innerText = genButton;
 }
 
+/** Create hover effect on given elements. */
 function filterOn(element) {
-    element.style.filter = "grayscale(100%)";
+  element.style.filter = "grayscale(100%)";
 }
 
 function filterOff(element) {
-    element.style.filter = "grayscale(0%)";
+  element.style.filter = "grayscale(0%)";
 }
 
 function largerFont(element) {
-    element.style.fontSize = "130%";
+  element.style.fontSize = "130%";
 }
 
 function normalFont(element) {
-    element.style.fontSize = "100%";
+  element.style.fontSize = "100%";
 }
 
-/* Slideshow. */
+/** Slideshow. */
 var slideIndex = 1;
 showSlides(slideIndex);
 
@@ -78,6 +79,8 @@ function currentSlide(n) {
   showSlides(slideIndex = n);
 }
 
+/** Displays slideshow by setting specified dot and picture as active
+ * and all others as inactive. */
 function showSlides(n) {
   var i;
   var slides = document.getElementsByClassName("mySlides");
@@ -85,33 +88,43 @@ function showSlides(n) {
   if (n > slides.length) {slideIndex = 1}    
   if (n < 1) {slideIndex = slides.length}
   for (i = 0; i < slides.length; i++) {
-      slides[i].style.display = "none";  
+    slides[i].style.display = "none";  
   }
   for (i = 0; i < dots.length; i++) {
-      dots[i].className = dots[i].className.replace(" active", "");
+    dots[i].className = dots[i].className.replace(" active", "");
   }
   slides[slideIndex-1].style.display = "block";  
   dots[slideIndex-1].className += " active";
 }
 
-function fetchRandQuote() {
-    fetch('/data').then(response => response.json()).then((quotes) => {
-        document.getElementById('quote-container').innerText = quotes[1]
-    });
+/** Copies specified number of user-created quotes onto site from datastore. */
+function updateQuotes(maxQuotes = 5) {
+  // Reset quotes
+  var quoteDiv = document.getElementById("quote-container");
+  quoteDiv.innerHTML='';
+
+  //Write quotes to quoteDiv
+  fetch('/data').then(response => response.json()).then((quotes) => {
+    if(quotes.length < maxQuotes) {maxQuotes = quotes.length}
+    for(i = 0; i < maxQuotes; i++) {
+      quoteDiv.appendChild(createPElement(quotes[i]));
+    }
+  });
 }
 
-function addComment() {
-    fetch('/data').then(response => response.json()).then((comments) => {
-        comments.forEach(comment => {
-          commentDiv = document.getElementById('quote-container');
-          commentDiv.appendChild(createListElement(comment));
-      });
-    });
+/** Update number of quotes visible on the page */
+function updateQuoteNum() {
+  updateQuotes(document.getElementById("numQuotes").value);
 }
 
-/** Creates an <li> element containing text. */
-function createListElement(text) {
-  const liElement = document.createElement('li');
-  liElement.innerText = text;
-  return liElement;
+/** Creates an <p> element containing text. */
+function createPElement(text) {
+  const pElement = document.createElement('p');
+  pElement.innerText = text;
+  return pElement;
+}
+
+/** Deletes comments from datastore and refreshes page. */
+function deleteComments() {
+  fetch('/delete-data')
 }

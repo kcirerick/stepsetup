@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+
 package com.google.sps.servlets;
 
 import java.io.IOException;
@@ -28,47 +29,58 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 
-/** Servlet that returns some example content. TODO: modify this file to handle comments data */
+/** Servlet that returns user-generated quotes.*/
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-  private ArrayList<String> quotes = new ArrayList<>();
-  DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+  private DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
+  /** Retrieves user-generated quotes from datastore to load onto page each time page is refreshed. */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-      // Initialize all quotes and copy local quotes into allQuotes
-      ArrayList<String> allQuotes = new ArrayList<>();
+    // Initialize allQuotes
+    ArrayList<String> allQuotes = new ArrayList<>();
 
-      Query query = new Query("comment").addSort("content", SortDirection.ASCENDING);
-      PreparedQuery results = datastore.prepare(query);
+    // Initialize query
+    Query query = new Query("quote").addSort("content", SortDirection.ASCENDING);
+    PreparedQuery results = datastore.prepare(query);
 
-      for (Entity entity : results.asIterable()) {
-          String curr = (String) entity.getProperty("content");
-          allQuotes.add(curr);
-      }
+    // Copy datastore comments into allQuotes
+    for (Entity entity : results.asIterable()) {
+      String curr = (String) entity.getProperty("content");
+      allQuotes.add(curr);
+    }
 
-      response.setContentType("text/json;");
-      String json = convertToJsonUsingGson(allQuotes);
-      response.getWriter().println(json);
+    // Set response and return JSON.
+    response.setContentType("text/json;");
+    String json = convertToJsonUsingGson(allQuotes);
+    response.getWriter().println(json);
   }
 
+  /** Retrieves comments from request form to store in datastore.
+   * Function finishes with a redirect call to /index.html which will effectively call doGet().*/
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-      String comment = request.getParameter("comment");
-      quotes.add(comment);
+    //Retrieve comment and comment quantity
+    String comment = request.getParameter("quote");
 
-      response.setContentType("text/html");
-      response.getWriter().println("Thanks for your input.");
+    //Create entity for datastore.
+    Entity commentEntity = new Entity("quote");
+    commentEntity.setProperty("content", comment);
 
-      Entity commentEntity = new Entity("comment");
-      commentEntity.setProperty("content", comment);
+    //Store entity.
+    datastore.put(commentEntity);
 
-      datastore.put(commentEntity);
+    //Set response.
+    response.setContentType("text/html");
+    response.getWriter().println("");
 
-      // Redirect back to the HTML page.
-      response.sendRedirect("/index.html");
+    // Redirect back to the front-page.
+    response.sendRedirect("/index.html");
   }
 
+  /* 
+   * Converts ArrayList of Strings to JSON using GSON. 
+   */
   private String convertToJsonUsingGson(ArrayList<String> quotes) {
     Gson gson = new Gson();
     String json = gson.toJson(quotes);
