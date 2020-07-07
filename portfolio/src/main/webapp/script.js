@@ -130,7 +130,8 @@ function deleteComments() {
   fetch('/delete-data');
 }
 
-/**  */
+/** Fetches login information and updates html within the
+ * loginPrompt div to reflect the login status. */
 function fetchLogin() {
     var commentBox = document.getElementById('commentBox');
     var loginPrompt = document.getElementById('loginPrompt');
@@ -145,4 +146,13 @@ function fetchLogin() {
             loginPrompt.innerHTML += loginStatus[i];
         }
     });
+}
+
+/** Initializes Map API. */
+var map;
+function initMap() {
+  map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat: -34.397, lng: 150.644 },
+    zoom: 8
+  });
 }
