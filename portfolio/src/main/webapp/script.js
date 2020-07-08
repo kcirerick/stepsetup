@@ -12,9 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * Adds a random greeting to the page.
- */
+/** Adds a random greeting to the page. */
 function addRandomQuote() {
   const quotes=
     ['Life happens wherever you are, whether you make it or not.', 'Pride is not the opposite of shame, but its source.', 
@@ -79,8 +77,8 @@ function currentSlide(n) {
   showSlides(slideIndex = n);
 }
 
-/** Displays slideshow by setting specified dot and picture as active
- * and all others as inactive. */
+/** Displays slideshow by setting specified dot and picture as active 
+  * and all others as inactive. */
 function showSlides(n) {
   var i;
   var slides = document.getElementsByClassName("mySlides");
@@ -137,7 +135,7 @@ function deleteComments() {
 }
 
 /** Fetches login information and updates html within the
- * loginPrompt div to reflect the login status. */
+  * loginPrompt div to reflect the login status. */
 function fetchLogin() {
     var commentBox = document.getElementById('commentBox');
     var loginPrompt = document.getElementById('loginPrompt');
@@ -156,16 +154,9 @@ function fetchLogin() {
 
 /** Initializes Map API. */
 function initMap() {
-  // The latitude and longitude of marker locations.
-  var India = {lat: 20.5937, lng: 78.9629};
-  var Yemen = {lat: 15.5527, lng: 48.5164 };
-  var Philippines = {lat: 12.8797, lng: 121.7740};
-  var HongKong = {lat: 22.3193, lng: 114.1694};
-  var Palestine = {lat: 31.9522, lng: 35.2332};
-  var Minneapolis = {lat: 44.9778, lng: 93.2650};
-
+  var worldCenter = {lat: 40.52, lng: 34.34};
   var map = new google.maps.Map(document.getElementById("map"), {
-    center: Philippines,
+    center: worldCenter,
     zoom: 3,
     styles: [
       { "elementType": "geometry",
@@ -315,10 +306,24 @@ function initMap() {
       }
     ]
   });
-  var marker1 = new google.maps.Marker({position: India, map: map});
-  var marker2 = new google.maps.Marker({position: Yemen, map: map});
-  var marker3 = new google.maps.Marker({position: Philippines, map: map});
-  var marker4 = new google.maps.Marker({position: HongKong, map: map});
-  var marker5 = new google.maps.Marker({position: Palestine, map: map});
-  var marker6 = new google.maps.Marker({position: Minneapolis, map: map});
+  var markers = initMarkers(map);
+}
+
+/** Initializes markers on map. */
+function initMarkers(map) {
+  // The latitude and longitude of marker locations.
+  var locationCoordinates = [ 
+    {lat: 20.5937, lng: 78.9629}, // India
+    {lat: 15.5527, lng: 48.5164 }, // Yemen
+    {lat: 12.8797, lng: 121.7740}, // Philippines
+    {lat: 22.3193, lng: 114.1694}, // Hong Kong
+    {lat: 31.9522, lng: 35.2332}, // Palestine
+    {lat: 44.9778, lng: -93.2650} // Minneapolis
+  ];
+
+  var markers = [];
+  locationCoordinates.forEach((location) => {
+    var marker = new google.maps.Marker({position: location, map: map})
+  });
+  return markers;
 }
