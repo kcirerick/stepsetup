@@ -171,5 +171,13 @@ h1 {
 /* Always set the map height explicitly to define the size of the div
  * element that contains the map. */
 #map {
-  height: 100%;
+  display:flex;
+  justify-content:space-around;
+  margin: 0 auto;
+  margin-top: 30px;
+  text-align: left;
+  height: 35vw;
+  width: 50vw;
+  border: 5px #333;
+  border-style: ridge;
 }
