@@ -135,7 +135,7 @@ function deleteComments() {
 }
 
 /** Fetches login information and updates html within the
- * loginPrompt div to reflect the login status. */
+  * loginPrompt div to reflect the login status. */
 function fetchLogin() {
     var commentBox = document.getElementById('commentBox');
     var loginPrompt = document.getElementById('loginPrompt');
@@ -154,16 +154,9 @@ function fetchLogin() {
 
 /** Initializes Map API. */
 function initMap() {
-  // The latitude and longitude of marker locations.
-  var India = {lat: 20.5937, lng: 78.9629};
-  var Yemen = {lat: 15.5527, lng: 48.5164 };
-  var Philippines = {lat: 12.8797, lng: 121.7740};
-  var HongKong = {lat: 22.3193, lng: 114.1694};
-  var Palestine = {lat: 31.9522, lng: 35.2332};
-  var Minneapolis = {lat: 44.9778, lng: 93.2650};
-
+  var worldCenter = {lat: 40.52, lng: 34.34};
   var map = new google.maps.Map(document.getElementById("map"), {
-    center: Philippines,
+    center: worldCenter,
     zoom: 3,
     styles: [
       { "elementType": "geometry",
@@ -314,7 +307,6 @@ function initMap() {
     ]
   });
 
-  // Initialize marker.
   var markers = initMarkers(map);
 }
 
