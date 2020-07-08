@@ -316,7 +316,7 @@ function initMap() {
 /** Initializes markers on map. */
 function initMarkers(map) {
   var locationCoordinates = initLocCoords();
-
+  var locationLinks = initLocLinks();
   var markers = [];
 
   // Initialize a marker for each location.
@@ -358,4 +358,18 @@ function initLocCoords() {
     {lat: 44.9778, lng: -93.2650} // Minneapolis
   ];
   return locationCoordinates;
+}
+
+// Initialize location links.
+function initLocLinks() {
+  // Links to information about each location.
+  var locationLinks = [
+    "https://indianaid.carrd.co",
+    "https://yemencrisis.carrd.co",
+    "https://junkterrorbill.carrd.co",
+    "https://standwithhongkong.carrd.co",
+    "https://helppalestine.carrd.co",
+    "https://blacklivesmatter.carrd.co"
+  ];
+  return locationLinks;
 }
