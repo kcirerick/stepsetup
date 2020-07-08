@@ -315,15 +315,7 @@ function initMap() {
 
 /** Initializes markers on map. */
 function initMarkers(map) {
-  // The latitude and longitude of marker locations.
-  var locationCoordinates = [ 
-    {lat: 20.5937, lng: 78.9629}, // India
-    {lat: 15.5527, lng: 48.5164 }, // Yemen
-    {lat: 12.8797, lng: 121.7740}, // Philippines
-    {lat: 22.3193, lng: 114.1694}, // Hong Kong
-    {lat: 31.9522, lng: 35.2332}, // Palestine
-    {lat: 44.9778, lng: -93.2650} // Minneapolis
-  ];
+  var locationCoordinates = initLocCoords();
 
   var markers = [];
 
@@ -352,4 +344,18 @@ function toggleBounce(marker) {
   } else {
     marker.setAnimation(google.maps.Animation.BOUNCE);
   }
+}
+
+// Initialize location coordinates.
+function initLocCoords() {
+  // The latitude and longitude of marker locations.
+  var locationCoordinates = [ 
+    {lat: 20.5937, lng: 78.9629}, // India
+    {lat: 15.5527, lng: 48.5164 }, // Yemen
+    {lat: 12.8797, lng: 121.7740}, // Philippines
+    {lat: 22.3193, lng: 114.1694}, // Hong Kong
+    {lat: 31.9522, lng: 35.2332}, // Palestine
+    {lat: 44.9778, lng: -93.2650} // Minneapolis
+  ];
+  return locationCoordinates;
 }
