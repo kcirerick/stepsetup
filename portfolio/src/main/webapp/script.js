@@ -155,6 +155,8 @@ function fetchLogin() {
 /** Initializes Map API. */
 function initMap() {
   var worldCenter = {lat: 40.52, lng: 34.34};
+
+  // Initialize map.
   var map = new google.maps.Map(document.getElementById("map"), {
     center: worldCenter,
     zoom: 3,
@@ -306,6 +308,8 @@ function initMap() {
       }
     ]
   });
+
+  // Initialize marker.
   var markers = initMarkers(map);
 }
 
@@ -322,8 +326,30 @@ function initMarkers(map) {
   ];
 
   var markers = [];
+
+  // Initialize a marker for each location.
   locationCoordinates.forEach((location) => {
-    var marker = new google.maps.Marker({position: location, map: map})
+    var marker = new google.maps.Marker({
+        position: location, 
+        map: map,
+        animation: google.maps.Animation.DROP
+        });
+
+    // Add event listeners to markers.
+    marker.addListener('mouseover', () => toggleBounce(marker));
+    marker.addListener('mouseout', () => toggleBounce(marker));
+
+    // Push marker into collection.
+    markers.push(marker);
   });
   return markers;
+}
+
+/** Toggles BOUNCE animation for markers on mouse event. */
+function toggleBounce(marker) {
+  if (marker.getAnimation() !== null) {
+    marker.setAnimation(null);
+  } else {
+    marker.setAnimation(google.maps.Animation.BOUNCE);
+  }
 }
