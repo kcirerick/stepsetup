@@ -103,6 +103,7 @@ function updatePage() {
     fetchLogin();
     initMap();
 }
+
 /** Copies specified number of user-created quotes onto site from datastore. */
 function updateQuotes(maxQuotes = 5) {
   // Reset quotes
@@ -154,10 +155,9 @@ function fetchLogin() {
 }
 
 /** Initializes Map API. */
-var map;
-function initMap() {
-  map = new google.maps.Map(document.getElementById("map"), {
+function initMap() { 
+  var map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: -34.397, lng: 150.644 },
-    zoom: 8
+    zoom: 3
   });
 }
