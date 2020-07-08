@@ -156,10 +156,16 @@ function fetchLogin() {
 
 /** Initializes Map API. */
 function initMap() {
-  // The location of center
-  var cent = {lat: -25.344, lng: 131.036};
+  // The latitude and longitude of marker locations.
+  var India = {lat: 20.5937, lng: 78.9629};
+  var Yemen = {lat: 15.5527, lng: 48.5164 };
+  var Philippines = {lat: 12.8797, lng: 121.7740};
+  var HongKong = {lat: 22.3193, lng: 114.1694};
+  var Palestine = {lat: 31.9522, lng: 35.2332};
+  var Minneapolis = {lat: 44.9778, lng: 93.2650};
+
   var map = new google.maps.Map(document.getElementById("map"), {
-    center: cent,
+    center: Philippines,
     zoom: 3,
     styles: [
       { "elementType": "geometry",
@@ -309,5 +315,10 @@ function initMap() {
       }
     ]
   });
-  var marker = new google.maps.Marker({position: cent, map: map});
+  var marker1 = new google.maps.Marker({position: India, map: map});
+  var marker2 = new google.maps.Marker({position: Yemen, map: map});
+  var marker3 = new google.maps.Marker({position: Philippines, map: map});
+  var marker4 = new google.maps.Marker({position: HongKong, map: map});
+  var marker5 = new google.maps.Marker({position: Palestine, map: map});
+  var marker6 = new google.maps.Marker({position: Minneapolis, map: map});
 }
