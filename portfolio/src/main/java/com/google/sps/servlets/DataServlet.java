@@ -72,19 +72,19 @@ public class DataServlet extends HttpServlet {
 
     UserService userService = UserServiceFactory.getUserService();
 
-    //Retrieve comment, comment quantity, and current user.
+    // Retrieve comment, comment quantity, and current user.
     String comment = request.getParameter("quote");
     String email = userService.getCurrentUser().getEmail();
     Entity user = getUser(userService.getCurrentUser().getUserId());
 
-    //Create entity for datastore.
+    // Create entity for datastore.
     Entity commentEntity = new Entity("comment", user.getKey());
     commentEntity.setProperty("content", comment);
     commentEntity.setProperty("email", email);
     commentEntity.setProperty("user", (String) user.getProperty("nickname"));
     commentEntity.setProperty("timestamp", System.currentTimeMillis());
 
-    //Store entity.
+    // Store entity.
     datastore.put(commentEntity);
 
     // Redirect back to the front-page.
