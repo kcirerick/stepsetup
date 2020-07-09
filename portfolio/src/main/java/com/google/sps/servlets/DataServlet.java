@@ -44,7 +44,7 @@ public class DataServlet extends HttpServlet {
 
     UserService userService = UserServiceFactory.getUserService();
 
-    // If user is not logged in, show a login form (could also redirect to a login page)
+    // If user is not logged in, do not display comments.
     if (!userService.isUserLoggedIn()) return;
 
     // Initialize query
