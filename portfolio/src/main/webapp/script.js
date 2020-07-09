@@ -315,14 +315,14 @@ function initMap() {
 
 /** Initializes markers on map. */
 function initMarkers(map) {
-  var locationCoordinates = initLocCoords();
-  var locationLinks = initLocLinks();
+  var locData = initLocData();
   var markers = [];
 
   // Initialize a marker for each location.
-  locationCoordinates.forEach((location) => {
+  locData.forEach((location) => {
+    var coord = {lat: location.lat, lng: location.lng};
     var marker = new google.maps.Marker({
-        position: location, 
+        position: coord, 
         map: map,
         animation: google.maps.Animation.DROP
         });
@@ -346,30 +346,15 @@ function toggleBounce(marker) {
   }
 }
 
-// Initialize location coordinates.
-function initLocCoords() {
-  // The latitude and longitude of marker locations.
+// Initialize location coordinates and links.
+function initLocData() {
   var locationCoordinates = [ 
-    {lat: 20.5937, lng: 78.9629}, // India
-    {lat: 15.5527, lng: 48.5164 }, // Yemen
-    {lat: 12.8797, lng: 121.7740}, // Philippines
-    {lat: 22.3193, lng: 114.1694}, // Hong Kong
-    {lat: 31.9522, lng: 35.2332}, // Palestine
-    {lat: 44.9778, lng: -93.2650} // Minneapolis
+    {lat: 20.5937, lng: 78.9629, link: "https://indianaid.carrd.co"}, // India
+    {lat: 15.5527, lng: 48.5164, link:  "https://yemencrisis.carrd.co"}, // Yemen
+    {lat: 12.8797, lng: 121.7740, link: "https://junkterrorbill.carrd.co"}, // Philippines
+    {lat: 22.3193, lng: 114.1694, link: "https://standwithhongkong.carrd.co"}, // Hong Kong
+    {lat: 31.9522, lng: 35.2332, link: "https://helppalestine.carrd.co"}, // Palestine
+    {lat: 44.9778, lng: -93.2650, link: "https://blacklivesmatter.carrd.co"} // Minneapolis
   ];
   return locationCoordinates;
-}
-
-// Initialize location links.
-function initLocLinks() {
-  // Links to information about each location.
-  var locationLinks = [
-    "https://indianaid.carrd.co",
-    "https://yemencrisis.carrd.co",
-    "https://junkterrorbill.carrd.co",
-    "https://standwithhongkong.carrd.co",
-    "https://helppalestine.carrd.co",
-    "https://blacklivesmatter.carrd.co"
-  ];
-  return locationLinks;
 }
