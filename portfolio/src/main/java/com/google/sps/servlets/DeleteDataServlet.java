@@ -45,7 +45,7 @@ public class DeleteDataServlet extends HttpServlet {
     Entity user = getUser(userService.getCurrentUser().getUserId());
     String nickname = (String) user.getProperty("nickname");
 
-    //Initialize Filter
+    // Initialize Filter
     Filter userFilter = new FilterPredicate("user", FilterOperator.EQUAL, nickname);
 
     // Initialize query for entities of kind "quote" and gather results.
