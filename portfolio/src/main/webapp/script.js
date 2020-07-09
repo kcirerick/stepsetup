@@ -356,17 +356,3 @@ function initLocData() {
   ];
   return locationCoordinates;
 }
-
-// Initialize location links.
-function initLocLinks() {
-  // Links to information about each location.
-  var locationLinks = [
-    "https://indianaid.carrd.co",
-    "https://yemencrisis.carrd.co",
-    "https://junkterrorbill.carrd.co",
-    "https://standwithhongkong.carrd.co",
-    "https://helppalestine.carrd.co",
-    "https://blacklivesmatter.carrd.co"
-  ];
-  return locationLinks;
-}
