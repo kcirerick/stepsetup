@@ -102,7 +102,7 @@ public class DataServlet extends HttpServlet {
   }
 
   /**
-   * Returns the nickname of the user with id, or empty String if the user has not set a nickname.
+   * Returns the entity coresponding to the current user.
    */
   private Entity getUser(String id) {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
