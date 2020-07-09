@@ -319,9 +319,9 @@ function initMarkers(map) {
   var markers = [];
 
   // Initialize a marker for each location.
-  locData.forEach((location) => {
-    var coord = {lat: location.lat, lng: location.lng};
-    var marker = new google.maps.Marker({
+  locData.forEach((currLocation) => {
+    let coord = {lat: currLocation.lat, lng: currLocation.lng};
+    let marker = new google.maps.Marker({
         position: coord, 
         map: map,
         animation: google.maps.Animation.DROP
@@ -330,6 +330,7 @@ function initMarkers(map) {
     // Add event listeners to markers.
     marker.addListener('mouseover', () => toggleBounce(marker));
     marker.addListener('mouseout', () => toggleBounce(marker));
+    marker.addListener('click', function() {location.href = currLocation.link});
 
     // Push marker into collection.
     markers.push(marker);
