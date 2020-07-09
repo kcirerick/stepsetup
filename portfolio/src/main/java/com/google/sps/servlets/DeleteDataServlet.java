@@ -43,13 +43,13 @@ public class DeleteDataServlet extends HttpServlet {
     UserService userService = UserServiceFactory.getUserService();
 
     Entity user = getUser(userService.getCurrentUser().getUserId());
-    String nickname = (String) user.getProperty("nickname");
+    String email = (String) user.getProperty("email");
 
     // Initialize Filter
-    Filter userFilter = new FilterPredicate("user", FilterOperator.EQUAL, nickname);
+    Filter emailFilter = new FilterPredicate("email", FilterOperator.EQUAL, email);
 
     // Initialize query for entities of kind "quote" and gather results.
-    Query query = new Query("comment").setFilter(userFilter).addSort("timestamp", SortDirection.ASCENDING);
+    Query query = new Query("comment").setFilter(emailFilter).addSort("timestamp", SortDirection.ASCENDING);
     PreparedQuery results = datastore.prepare(query);
 
     // Delete all results.
