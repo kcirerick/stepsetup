@@ -19,29 +19,29 @@
     <div id="header">
       <h1>Erick Enriquez</h1>
       <p>This portfolio contains a bunch of random information about Erick's Life. If you are not interested in his life,
-            perhaps you may be interest in creating some quotes.</p>
+            perhaps you may be interested in commenting below.</p>
       <div id="loginPrompt"></div>
       <div id="commentBox">
-        <form action="/data" onchange="updateQuoteNum();">
-          <label for="numQuotes">Please enter how many quotes you would like to display (between 1 and 5).</label>
+        <form action="/data" onchange="updateCommentNum();">
+          <label for="numComments">Please enter how many comments you would like to display (between 1 and 5).</label>
           <br>
-          <input type="number" id="numQuotes" name="quantity" min="1" max="5" value="5">
+          <input type="number" id="numComments" name="quantity" min="1" max="5" value="5">
           <br>
         </form>
         <form action="/data" method="post">
-          <label for="quoteBox">Add a quote (Note: Each User is currently allowed one comment):</label>
+          <label for="commentBox">Add a comment:</label>
           <br>
-          <input id="quoteBox" type="text" name="quote" value="">
-          <input type="submit" id="quoteSubmit" name="submitQuotes" value="Submit">
+          <input id="commentBox" type="text" name="comment" value="">
+          <input type="submit" id="commentSubmit" name="submitComments" value="Submit">
           <br> 
         </form>
         <br>
-        <div id="quote-container"></div>
+        <div id="comment-container"></div>
         <br>
         <form action="/delete-data" method="post">
-          <label for="quoteDel">Delete Quotes</label>
+          <label for="commentDel">Delete Comments</label>
           <br>
-          <input type="submit" id="quoteDel" name="deleteQuotes" value="Delete My Comments">
+          <input type="submit" id="commentDel" name="deleteComments" value="Delete My Comments">
           <br>
         </form>
       </div>
