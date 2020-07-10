@@ -30,12 +30,12 @@ import java.util.ArrayList;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
-/** Servlet that returns user-generated quotes.*/
+/** Servlet that returns user-generated comments.*/
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
   private DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
-  /** Retrieves user-generated quotes from datastore to load onto page each time page is refreshed.
+  /** Retrieves user-generated comments from datastore to load onto page each time page is refreshed.
    * Includes email of user that posted the comment. */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -73,7 +73,7 @@ public class DataServlet extends HttpServlet {
     UserService userService = UserServiceFactory.getUserService();
 
     // Retrieve comment, comment quantity, and current user.
-    String comment = request.getParameter("quote");
+    String comment = request.getParameter("comment");
     String email = userService.getCurrentUser().getEmail();
     Entity user = getUser(userService.getCurrentUser().getUserId());
 
@@ -95,9 +95,9 @@ public class DataServlet extends HttpServlet {
   /* 
    * Converts ArrayList of Strings to JSON using GSON. 
    */
-  private String convertToJsonUsingGson(ArrayList<String> quotes) {
+  private String convertToJsonUsingGson(ArrayList<String> comments) {
     Gson gson = new Gson();
-    String json = gson.toJson(quotes);
+    String json = gson.toJson(comments);
     return json;
   }
 
@@ -111,6 +111,7 @@ public class DataServlet extends HttpServlet {
             .setFilter(new Query.FilterPredicate("id", Query.FilterOperator.EQUAL, id));
     PreparedQuery results = datastore.prepare(query);
     return results.asSingleEntity();
+  }
 }
 
 

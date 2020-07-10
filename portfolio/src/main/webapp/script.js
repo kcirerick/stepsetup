@@ -95,31 +95,31 @@ function showSlides(n) {
   dots[slideIndex-1].className += " active";
 }
 
-/** Initializes webpage with updates quotes, login status, and map features. */
+/** Initializes webpage with updates comments, login status, and map features. */
 function updatePage() {
-    updateQuotes();
+    updateComments();
     fetchLogin();
     initMap();
 }
 
-/** Copies specified number of user-created quotes onto site from datastore. */
-function updateQuotes(maxQuotes = 5) {
-  // Reset quotes
-  var quoteDiv = document.getElementById("quote-container");
-  quoteDiv.innerHTML='';
+/** Copies specified number of user-created comments onto site from datastore. */
+function updateComments(maxComments = 5) {
+  // Reset comments
+  var commentDiv = document.getElementById("comment-container");
+  commentDiv.innerHTML='';
 
-  //Write quotes to quoteDiv
+  //Write comments to commentDiv
   fetch('/data').then(response => response.json()).then((strResponse) => {
-    if(strResponse.length < maxQuotes) {maxQuotes = strResponse.length}
-    for(i = 0; i < maxQuotes; i++) {
-      quoteDiv.innerHTML += strResponse[i];
+    if(strResponse.length < maxComments) {maxComments = strResponse.length}
+    for(i = 0; i < maxComments; i++) {
+      commentDiv.innerHTML += strResponse[i];
     }
   });
 }
 
-/** Update number of quotes visible on the page */
-function updateQuoteNum() {
-  updateQuotes(document.getElementById("numQuotes").value);
+/** Update number of comments visible on the page */
+function updateCommentNum() {
+  updateComments(document.getElementById("numComments").value);
 }
 
 /** Creates an <p> element containing text. */
