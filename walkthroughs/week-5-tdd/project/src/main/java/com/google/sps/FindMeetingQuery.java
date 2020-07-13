@@ -24,7 +24,7 @@ public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
     List<TimeRange> options = new ArrayList<>();
     if(request.getDuration() > TimeRange.WHOLE_DAY.duration()) return options;
-    if(events.isEmpty()) return Arrays.asList(TimeRange.WHOLE_DAY);
+    if(events.isEmpty() || request.getAttendees().isEmpty()) return Arrays.asList(TimeRange.WHOLE_DAY);
 
     ArrayList<Event> orderedEvents = new ArrayList<Event>(events);
     Collections.sort(orderedEvents, Event.ORDER_BY_START);
