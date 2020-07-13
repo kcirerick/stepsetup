@@ -22,8 +22,30 @@ import java.util.List;
 
 public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-    Collection<TimeRange> options = Arrays.asList();
+    List<TimeRange> options = new ArrayList<>();
     if(request.getDuration() > TimeRange.WHOLE_DAY.duration()) return options;
     if(events.isEmpty()) return Arrays.asList(TimeRange.WHOLE_DAY);
+
+    ArrayList<Event> orderedEvents = new ArrayList<Event>(events);
+    Collections.sort(orderedEvents, Event.ORDER_BY_START);
+
+    int lastEventEnd = 0;
+    for(Event currEvent: orderedEvents) {
+      TimeRange currRange = currEvent.getWhen();
+      int timeBetweenEvents = currRange.start() - lastEventEnd;
+
+      if(timeBetweenEvents >= request.getDuration()) {
+          TimeRange option = TimeRange.fromStartDuration(lastEventEnd, timeBetweenEvents);
+
+          options.add(option);
+      }
+      lastEventEnd = currRange.end();
+    }
+    int timeAtEndOfDay = TimeRange.WHOLE_DAY.end() - lastEventEnd;
+    if(timeAtEndOfDay >= request.getDuration()) {
+          TimeRange option = TimeRange.fromStartDuration(lastEventEnd, timeAtEndOfDay);
+          options.add(option);
+      }
+    return options;
   }
 }
