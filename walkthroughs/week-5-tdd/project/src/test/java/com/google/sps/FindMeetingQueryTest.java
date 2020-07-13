@@ -85,12 +85,11 @@ public final class FindMeetingQueryTest {
         TimeRange.fromStartDuration(TIME_0830AM, DURATION_30_MINUTES), Arrays.asList(PERSON_A)));
 
     MeetingRequest request = new MeetingRequest(Arrays.asList(PERSON_A), DURATION_30_MINUTES);
-
     Collection<TimeRange> actual = query.query(events, request);
     Collection<TimeRange> expected =
         Arrays.asList(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TIME_0830AM, false),
             TimeRange.fromStartEnd(TIME_0900AM, TimeRange.END_OF_DAY, true));
-
+    System.out.println(expected);
     Assert.assertEquals(expected, actual);
   }
 
