@@ -31,20 +31,16 @@ public final class FindMeetingQuery {
 
     int lastEventEnd = 0;
     for(Event currEvent: orderedEvents) {
-      // If nobody in the request needs to be at this meeting, we don't care to check it.
-      if(Collections.disjoint(currEvent.getAttendees(), request.getAttendees())) continue;
-
-      // Check if the request fits in this gap, and add this gap as an option if it does.
       TimeRange currRange = currEvent.getWhen();
       int timeBetweenEvents = currRange.start() - lastEventEnd;
+
       if(timeBetweenEvents >= request.getDuration()) {
-        TimeRange option = TimeRange.fromStartDuration(lastEventEnd, timeBetweenEvents);
-        options.add(option);
+          TimeRange option = TimeRange.fromStartDuration(lastEventEnd, timeBetweenEvents);
+
+          options.add(option);
       }
       lastEventEnd = currRange.end();
     }
-
-    // Check the gap between the last scheduled meeting and the end of the day.
     int timeAtEndOfDay = TimeRange.WHOLE_DAY.end() - lastEventEnd;
     if(timeAtEndOfDay >= request.getDuration()) {
           TimeRange option = TimeRange.fromStartDuration(lastEventEnd, timeAtEndOfDay);
