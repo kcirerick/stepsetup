@@ -24,8 +24,8 @@ public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
     List<TimeRange> mandatory = new ArrayList<>();
     List<TimeRange> optional = new ArrayList<>();
-    boolean noAttendees = 
-      (request.getAttendees().isEmpty() && request.getOptionalAttendees().isEmpty());
+    boolean noAttendees = (request.getAttendees().isEmpty() 
+                            && request.getOptionalAttendees().isEmpty());
 
     if(request.getDuration() > TimeRange.WHOLE_DAY.duration()) {
       return mandatory;
@@ -37,27 +37,24 @@ public final class FindMeetingQuery {
     ArrayList<Event> orderedEvents = new ArrayList<Event>(events);
     Collections.sort(orderedEvents, Event.ORDER_BY_START);
 
-    // Add all non-conflicting times before end of day.
     int lastEventEndMandatory = 0;
     int lastEventEndOptional = 0;
     for(Event currEvent: orderedEvents) {
       Collection<String> attendees = currEvent.getAttendees();
-      // If none of the required attendees need to be at currEvent, we can ignore it.
+      
       if(Collections.disjoint(attendees, request.getAttendees())) { // If required don't need to be there.
         if(Collections.disjoint(attendees, request.getOptionalAttendees())) { // And optional don't need to be there.
-          continue; // Ignore this event, it doesn't affect our schedule.
+          continue;
         } else { // but optional need to be there.
-          // Update optional list avoiding this event.
           lastEventEndOptional = checkCurrEvent(currEvent, lastEventEndOptional, request, optional);
         }
-      } else { // If required do need to be there.
-        // Update both lists. We cannot schedule a meeting during this time.
+      } else {
         lastEventEndMandatory = checkCurrEvent(currEvent, lastEventEndMandatory, request, mandatory);
         lastEventEndOptional = checkCurrEvent(currEvent, lastEventEndOptional, request, optional);
       }
     }
 
-    // Add final period of the day to both lists, if necessary.
+    // Add final period of the day to both lists.
     int timeAtEndOfDay = TimeRange.WHOLE_DAY.end() - lastEventEndMandatory;
     if(timeAtEndOfDay >= request.getDuration()) {
       TimeRange option = TimeRange.fromStartDuration(lastEventEndMandatory, timeAtEndOfDay);
