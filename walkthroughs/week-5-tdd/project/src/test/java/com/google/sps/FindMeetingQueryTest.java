@@ -363,9 +363,8 @@ public final class FindMeetingQueryTest {
 
   @Test
   public void onlyOptionalAttendees() {
-    // Have two people, but make it so that the only mandatory person has just enough time
-    // for a meeting, but it's during the optional person's meeting. Options should include
-    // the only slot where the mandatory attendee can make it.
+    // Have two people, both of which are optional attendees, and  return all common times they
+    // can meet.
     //
     // Events  :       |--A(O)-|     |--B(O)-|
     // Day     : |---------------------------------|
@@ -388,7 +387,31 @@ public final class FindMeetingQueryTest {
             TimeRange.fromStartEnd(TIME_1100AM, TimeRange.END_OF_DAY));
     
     Assery.assertEquals(expected, actual);
-    )
+  }
+
+  @Test
+  public void onlyBusyOptionalAttendees() {
+    // Have two people, both of which are optional attendees, but with no common gaps
+    // in their schedule. Query should return that no time is available.
+    //
+    // Events  : |------A(O)-----||------B(O)------|
+    // Day     : |---------------------------------|
+    // Options : None
+
+    Collection<Event> events = Arrays.asList(
+        new Event("Event 1", TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TIME_1100AM),
+            Arrays.asList(PERSON_A)),
+        new Event("Event 2", TimeRange.fromStartEnd(TIME_1100AM, TimeRange.END_OF_DAY),
+            Arrays.asList(PERSON_B)));
+
+    MeetingRequest request = new MeetingRequest(Arrays.asList(), DURATION_1_HOUR);
+    request.addOptionalAttendee(PERSON_A);
+    request.addOptionalAttendee(PERSON_B);
+
+    Collection<TimeRange> actual = query.query(events, request);
+    Collection<TimeRange> expected = Arrays.asList();
+    
+    Assery.assertEquals(expected, actual);
   }
 }
 
