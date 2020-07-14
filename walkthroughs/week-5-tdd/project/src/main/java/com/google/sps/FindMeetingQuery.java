@@ -23,11 +23,14 @@ import java.util.List;
 public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
     List<TimeRange> mandatory = new ArrayList<>();
-    //List<TimeRange> optional = new ArrayList<>();
+    List<TimeRange> optional = new ArrayList<>();
+    boolean noAttendees = 
+      (request.getAttendees().isEmpty() && request.getOptionalAttendees().isEmpty());
+
     if(request.getDuration() > TimeRange.WHOLE_DAY.duration()) {
       return mandatory;
     }
-    if(events.isEmpty() || request.getAttendees().isEmpty()) {
+    if(events.isEmpty() || noAttendees) {
       return Arrays.asList(TimeRange.WHOLE_DAY);
     }
 
@@ -36,21 +39,40 @@ public final class FindMeetingQuery {
 
     // Add all non-conflicting times before end of day.
     int lastEventEndMandatory = 0;
-    //int lastEventEndOptional = 0;
+    int lastEventEndOptional = 0;
     for(Event currEvent: orderedEvents) {
       Collection<String> attendees = currEvent.getAttendees();
       // If none of the required attendees need to be at currEvent, we can ignore it.
-      if(Collections.disjoint(attendees, request.getAttendees())) continue;
-      lastEventEndMandatory = checkCurrEvent(currEvent, lastEventEndMandatory, request, mandatory);
+      if(Collections.disjoint(attendees, request.getAttendees())) { // If required don't need to be there.
+        if(Collections.disjoint(attendees, request.getOptionalAttendees())) { // And optional don't need to be there.
+          continue; // Ignore this event, it doesn't affect our schedule.
+        } else { // but optional need to be there.
+          // Update optional list avoiding this event.
+          lastEventEndOptional = checkCurrEvent(currEvent, lastEventEndOptional, request, optional);
+        }
+      } else { // If required do need to be there.
+        // Update both lists. We cannot schedule a meeting during this time.
+        lastEventEndMandatory = checkCurrEvent(currEvent, lastEventEndMandatory, request, mandatory);
+        lastEventEndOptional = checkCurrEvent(currEvent, lastEventEndOptional, request, optional);
+      }
     }
 
-    // Add final period of the day if it all attendees have the time.
+    // Add final period of the day to both lists, if necessary.
     int timeAtEndOfDay = TimeRange.WHOLE_DAY.end() - lastEventEndMandatory;
     if(timeAtEndOfDay >= request.getDuration()) {
-          TimeRange option = TimeRange.fromStartDuration(lastEventEndMandatory, timeAtEndOfDay);
-          mandatory.add(option);
-      }
-    return mandatory;
+      TimeRange option = TimeRange.fromStartDuration(lastEventEndMandatory, timeAtEndOfDay);
+      mandatory.add(option);
+    }
+    
+    timeAtEndOfDay = TimeRange.WHOLE_DAY.end() - lastEventEndOptional;
+    if(timeAtEndOfDay >= request.getDuration()) {
+      TimeRange option = TimeRange.fromStartDuration(lastEventEndOptional, timeAtEndOfDay);
+      optional.add(option);
+    }
+    
+    // If we have events where everyone can attend, or no required attendees,
+    // return optional, otherwise, return only those times when mandatory attendees can attend.
+    return (!optional.isEmpty() || request.getAttendees().isEmpty()) ? optional : mandatory;
   }
 
   private int checkCurrEvent(Event currEvent, int lastEventEnd, 
