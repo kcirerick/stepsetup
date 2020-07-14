@@ -23,24 +23,35 @@ import java.util.List;
 public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
     List<TimeRange> options = new ArrayList<>();
-    if(request.getDuration() > TimeRange.WHOLE_DAY.duration()) return options;
-    if(events.isEmpty() || request.getAttendees().isEmpty()) return Arrays.asList(TimeRange.WHOLE_DAY);
+    if(request.getDuration() > TimeRange.WHOLE_DAY.duration()) {
+      return options;
+    }
+    if(events.isEmpty() || request.getAttendees().isEmpty()) {
+      return Arrays.asList(TimeRange.WHOLE_DAY);
+    }
 
     ArrayList<Event> orderedEvents = new ArrayList<Event>(events);
     Collections.sort(orderedEvents, Event.ORDER_BY_START);
 
+    // Add all non-conflicting times before end of day.
     int lastEventEnd = 0;
     for(Event currEvent: orderedEvents) {
+      // If none of the requested attendees need to be at currEvent, we can ignore it.
+      if(Collections.disjoint(currEvent.getAttendees(), request.getAttendees())) continue;
       TimeRange currRange = currEvent.getWhen();
       int timeBetweenEvents = currRange.start() - lastEventEnd;
 
+      // Overlapping events will fail this check without explicitly checking.
       if(timeBetweenEvents >= request.getDuration()) {
           TimeRange option = TimeRange.fromStartDuration(lastEventEnd, timeBetweenEvents);
-
           options.add(option);
       }
-      lastEventEnd = currRange.end();
+      if(currRange.end() > lastEventEnd) {
+        lastEventEnd = currRange.end();
+      }
     }
+
+    // Add final period of the day if it all attendees have the time.
     int timeAtEndOfDay = TimeRange.WHOLE_DAY.end() - lastEventEnd;
     if(timeAtEndOfDay >= request.getDuration()) {
           TimeRange option = TimeRange.fromStartDuration(lastEventEnd, timeAtEndOfDay);
