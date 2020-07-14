@@ -24,8 +24,9 @@ public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
     List<TimeRange> mandatory = new ArrayList<>();
     List<TimeRange> optional = new ArrayList<>();
+
     boolean noAttendees = (request.getAttendees().isEmpty() 
-        && request.getOptionalAttendees().isEmpty());
+      && request.getOptionalAttendees().isEmpty());
 
     if(request.getDuration() > TimeRange.WHOLE_DAY.duration()) {
       return mandatory;
@@ -36,11 +37,18 @@ public final class FindMeetingQuery {
 
     ArrayList<Event> orderedEvents = new ArrayList<Event>(events);
     Collections.sort(orderedEvents, Event.ORDER_BY_START);
+
+    // Populate mandatory and optional.
     int[] lastEventEnds = partialQuery(orderedEvents, request, mandatory, optional);
+    completeQuery(lastEventEnds[0], lastEventEnds[1], request, mandatory, optional);
+    
+    // If we have events where everyone can attend, or no required attendees,
+    // return optional, otherwise, return only those times when mandatory attendees can attend.
+    return (!optional.isEmpty() || request.getAttendees().isEmpty()) ? optional : mandatory;
+  }
 
-    int lastEventEndMandatory = lastEventEnds[0];
-    int lastEventEndOptional = lastEventEnds[1];
-
+  private void completeQuery(int lastEventEndMandatory, int lastEventEndOptional, MeetingRequest request,
+    List<TimeRange> mandatory, List<TimeRange> optional) {
     // Add final period of the day to both lists.
     int timeAtEndOfDay = TimeRange.WHOLE_DAY.end() - lastEventEndMandatory;
     if(timeAtEndOfDay >= request.getDuration()) {
@@ -53,10 +61,6 @@ public final class FindMeetingQuery {
       TimeRange option = TimeRange.fromStartDuration(lastEventEndOptional, timeAtEndOfDay);
       optional.add(option);
     }
-    
-    // If we have events where everyone can attend, or no required attendees,
-    // return optional, otherwise, return only those times when mandatory attendees can attend.
-    return (!optional.isEmpty() || request.getAttendees().isEmpty()) ? optional : mandatory;
   }
 
   private int[] partialQuery(ArrayList<Event> events, MeetingRequest request, 
