@@ -37,22 +37,17 @@ public final class FindMeetingQuery {
     ArrayList<Event> orderedEvents = new ArrayList<Event>(events);
     Collections.sort(orderedEvents, Event.ORDER_BY_START);
 
-    int lastEventEndMandatory = 0;
-    int lastEventEndOptional = 0;
+    int[] lastEventEnds = {0,0};
     for(Event currEvent: orderedEvents) {
       Collection<String> attendees = currEvent.getAttendees();
-      
-      if(Collections.disjoint(attendees, request.getAttendees())) { // If required don't need to be there.
-        if(Collections.disjoint(attendees, request.getOptionalAttendees())) { // And optional don't need to be there.
-          continue;
-        } else { // but optional need to be there.
-          lastEventEndOptional = checkCurrEvent(currEvent, lastEventEndOptional, request, optional);
-        }
-      } else {
-        lastEventEndMandatory = checkCurrEvent(currEvent, lastEventEndMandatory, request, mandatory);
-        lastEventEndOptional = checkCurrEvent(currEvent, lastEventEndOptional, request, optional);
-      }
+      int lastEventEndMandatory = lastEventEnds[0];
+      int lastEventEndOptional = lastEventEnds[1];
+      lastEventEnds = updateListsWithCurrEvent(lastEventEndMandatory, lastEventEndOptional, request, optional,
+        mandatory, attendees, currEvent);
     }
+
+    int lastEventEndMandatory = lastEventEnds[0];
+    int lastEventEndOptional = lastEventEnds[1];
 
     // Add final period of the day to both lists.
     int timeAtEndOfDay = TimeRange.WHOLE_DAY.end() - lastEventEndMandatory;
@@ -70,6 +65,21 @@ public final class FindMeetingQuery {
     // If we have events where everyone can attend, or no required attendees,
     // return optional, otherwise, return only those times when mandatory attendees can attend.
     return (!optional.isEmpty() || request.getAttendees().isEmpty()) ? optional : mandatory;
+  }
+
+  private int[] updateListsWithCurrEvent(int lastEventEndMandatory, int lastEventEndOptional, MeetingRequest request,
+    List<TimeRange> optional, List<TimeRange> mandatory, Collection<String> attendees, Event currEvent) {
+
+    if(Collections.disjoint(attendees, request.getAttendees())) { // If required don't need to be there.
+      if(!Collections.disjoint(attendees, request.getOptionalAttendees())) { // But optional do.
+        lastEventEndOptional = checkCurrEvent(currEvent, lastEventEndOptional, request, optional);
+      }
+    } else {
+      lastEventEndMandatory = checkCurrEvent(currEvent, lastEventEndMandatory, request, mandatory);
+      lastEventEndOptional = checkCurrEvent(currEvent, lastEventEndOptional, request, optional);
+    }
+    int[] lastEventEnds = {lastEventEndMandatory, lastEventEndOptional};
+    return lastEventEnds;
   }
 
   private int checkCurrEvent(Event currEvent, int lastEventEnd, 
