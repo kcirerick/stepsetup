@@ -25,7 +25,7 @@ public final class FindMeetingQuery {
     List<TimeRange> mandatory = new ArrayList<>();
     List<TimeRange> optional = new ArrayList<>();
     boolean noAttendees = (request.getAttendees().isEmpty() 
-                            && request.getOptionalAttendees().isEmpty());
+        && request.getOptionalAttendees().isEmpty());
 
     if(request.getDuration() > TimeRange.WHOLE_DAY.duration()) {
       return mandatory;
@@ -36,15 +36,7 @@ public final class FindMeetingQuery {
 
     ArrayList<Event> orderedEvents = new ArrayList<Event>(events);
     Collections.sort(orderedEvents, Event.ORDER_BY_START);
-
-    int[] lastEventEnds = {0,0};
-    for(Event currEvent: orderedEvents) {
-      Collection<String> attendees = currEvent.getAttendees();
-      int lastEventEndMandatory = lastEventEnds[0];
-      int lastEventEndOptional = lastEventEnds[1];
-      lastEventEnds = updateListsWithCurrEvent(lastEventEndMandatory, lastEventEndOptional, request, optional,
-        mandatory, attendees, currEvent);
-    }
+    int[] lastEventEnds = partialQuery(orderedEvents, request, mandatory, optional);
 
     int lastEventEndMandatory = lastEventEnds[0];
     int lastEventEndOptional = lastEventEnds[1];
@@ -65,6 +57,19 @@ public final class FindMeetingQuery {
     // If we have events where everyone can attend, or no required attendees,
     // return optional, otherwise, return only those times when mandatory attendees can attend.
     return (!optional.isEmpty() || request.getAttendees().isEmpty()) ? optional : mandatory;
+  }
+
+  private int[] partialQuery(ArrayList<Event> events, MeetingRequest request, 
+    List<TimeRange> mandatory, List<TimeRange> optional) {
+    int[] lastEventEnds = {0,0};
+    for(Event currEvent: events) {
+      Collection<String> attendees = currEvent.getAttendees();
+      int lastEventEndMandatory = lastEventEnds[0];
+      int lastEventEndOptional = lastEventEnds[1];
+      lastEventEnds = updateListsWithCurrEvent(lastEventEndMandatory, lastEventEndOptional, request, optional,
+        mandatory, attendees, currEvent);
+    }
+    return lastEventEnds;
   }
 
   private int[] updateListsWithCurrEvent(int lastEventEndMandatory, int lastEventEndOptional, MeetingRequest request,
