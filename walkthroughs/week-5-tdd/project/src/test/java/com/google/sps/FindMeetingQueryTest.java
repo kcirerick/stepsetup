@@ -334,7 +334,7 @@ public final class FindMeetingQueryTest {
   }
 
   @Test
-  public void justEnoughRoom() {
+  public void justEnoughRoomWithOptionalAttendee() {
     // Have two people, but make it so that the only mandatory person has just enough time
     // for a meeting, but it's during the optional person's meeting. Options should include
     // the only slot where the mandatory attendee can make it.
@@ -359,6 +359,36 @@ public final class FindMeetingQueryTest {
         Arrays.asList(TimeRange.fromStartDuration(TIME_0830AM, DURATION_30_MINUTES));
 
     Assert.assertEquals(expected, actual);
+  }
+
+  @Test
+  public void onlyOptionalAttendees() {
+    // Have two people, but make it so that the only mandatory person has just enough time
+    // for a meeting, but it's during the optional person's meeting. Options should include
+    // the only slot where the mandatory attendee can make it.
+    //
+    // Events  :       |--A(O)-|     |--B(O)-|
+    // Day     : |---------------------------------|
+    // Options : |-----|       |-----|       |-----|
+
+    Collection<Event> events = Arrays.asList(
+        new Event("Event 1", TimeRange.fromStartDuration(TIME_0800AM, DURATION_1_HOUR),
+            Arrays.asList(PERSON_A)),
+        new Event("Event 2", TimeRange.fromStartDuration(TIME_1000AM, DURATION_1_HOUR),
+            Arrays.asList(PERSON_B)));
+
+    MeetingRequest request = new MeetingRequest(Arrays.asList(), DURATION_1_HOUR);
+    request.addOptionalAttendee(PERSON_A);
+    request.addOptionalAttendee(PERSON_B);
+
+    Collection<TimeRange> actual = query.query(events, request);
+    Collection<TimeRange> expected =
+        Arrays.asList(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TIME_0800AM, false),
+            TimeRange.fromStartDuration(TIME_0900AM, DURATION_1_HOUR),
+            TimeRange.fromStartEnd(TIME_1100AM, TimeRange.END_OF_DAY));
+    
+    Assery.assertEquals(expected, actual);
+    )
   }
 }
 
