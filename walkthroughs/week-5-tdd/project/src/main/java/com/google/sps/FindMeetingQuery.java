@@ -22,9 +22,10 @@ import java.util.List;
 
 public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-    List<TimeRange> options = new ArrayList<>();
+    List<TimeRange> mandatory = new ArrayList<>();
+    //List<TimeRange> optional = new ArrayList<>();
     if(request.getDuration() > TimeRange.WHOLE_DAY.duration()) {
-      return options;
+      return mandatory;
     }
     if(events.isEmpty() || request.getAttendees().isEmpty()) {
       return Arrays.asList(TimeRange.WHOLE_DAY);
@@ -34,29 +35,37 @@ public final class FindMeetingQuery {
     Collections.sort(orderedEvents, Event.ORDER_BY_START);
 
     // Add all non-conflicting times before end of day.
-    int lastEventEnd = 0;
+    int lastEventEndMandatory = 0;
+    //int lastEventEndOptional = 0;
     for(Event currEvent: orderedEvents) {
-      // If none of the requested attendees need to be at currEvent, we can ignore it.
-      if(Collections.disjoint(currEvent.getAttendees(), request.getAttendees())) continue;
-      TimeRange currRange = currEvent.getWhen();
-      int timeBetweenEvents = currRange.start() - lastEventEnd;
-
-      // Overlapping events will fail this check without explicitly checking.
-      if(timeBetweenEvents >= request.getDuration()) {
-          TimeRange option = TimeRange.fromStartDuration(lastEventEnd, timeBetweenEvents);
-          options.add(option);
-      }
-      if(currRange.end() > lastEventEnd) {
-        lastEventEnd = currRange.end();
-      }
+      Collection<String> attendees = currEvent.getAttendees();
+      // If none of the required attendees need to be at currEvent, we can ignore it.
+      if(Collections.disjoint(attendees, request.getAttendees())) continue;
+      lastEventEndMandatory = checkCurrEvent(currEvent, lastEventEndMandatory, request, mandatory);
     }
 
     // Add final period of the day if it all attendees have the time.
-    int timeAtEndOfDay = TimeRange.WHOLE_DAY.end() - lastEventEnd;
+    int timeAtEndOfDay = TimeRange.WHOLE_DAY.end() - lastEventEndMandatory;
     if(timeAtEndOfDay >= request.getDuration()) {
-          TimeRange option = TimeRange.fromStartDuration(lastEventEnd, timeAtEndOfDay);
-          options.add(option);
+          TimeRange option = TimeRange.fromStartDuration(lastEventEndMandatory, timeAtEndOfDay);
+          mandatory.add(option);
       }
-    return options;
+    return mandatory;
+  }
+
+  private int checkCurrEvent(Event currEvent, int lastEventEnd, 
+    MeetingRequest request, List<TimeRange> options) {
+    TimeRange currRange = currEvent.getWhen();
+    int timeBetweenEvents = currRange.start() - lastEventEnd;
+
+    // Overlapping events will fail this check without explicitly checking.
+    if(timeBetweenEvents >= request.getDuration()) {
+      TimeRange option = TimeRange.fromStartDuration(lastEventEnd, timeBetweenEvents);
+      options.add(option);
+    }
+    if(currRange.end() > lastEventEnd) {
+      lastEventEnd = currRange.end();
+    }
+    return lastEventEnd;
   }
 }
