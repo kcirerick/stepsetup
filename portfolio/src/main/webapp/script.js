@@ -12,9 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * Adds a random greeting to the page.
- */
+/** Adds a random greeting to the page. */
 function addRandomQuote() {
   const quotes=
     ['Life happens wherever you are, whether you make it or not.', 'Pride is not the opposite of shame, but its source.', 
@@ -79,8 +77,8 @@ function currentSlide(n) {
   showSlides(slideIndex = n);
 }
 
-/** Displays slideshow by setting specified dot and picture as active
- * and all others as inactive. */
+/** Displays slideshow by setting specified dot and picture as active 
+  * and all others as inactive. */
 function showSlides(n) {
   var i;
   var slides = document.getElementsByClassName("mySlides");
@@ -97,24 +95,31 @@ function showSlides(n) {
   dots[slideIndex-1].className += " active";
 }
 
-/** Copies specified number of user-created quotes onto site from datastore. */
-function updateQuotes(maxQuotes = 5) {
-  // Reset quotes
-  var quoteDiv = document.getElementById("quote-container");
-  quoteDiv.innerHTML='';
+/** Initializes webpage with updates comments, login status, and map features. */
+function updatePage() {
+    updateComments();
+    fetchLogin();
+    initMap();
+}
 
-  //Write quotes to quoteDiv
-  fetch('/data').then(response => response.json()).then((quotes) => {
-    if(quotes.length < maxQuotes) {maxQuotes = quotes.length}
-    for(i = 0; i < maxQuotes; i++) {
-      quoteDiv.appendChild(createPElement(quotes[i]));
+/** Copies specified number of user-created comments onto site from datastore. */
+function updateComments(maxComments = 5) {
+  // Reset comments
+  var commentDiv = document.getElementById("comment-container");
+  commentDiv.innerHTML='';
+
+  //Write comments to commentDiv
+  fetch('/data').then(response => response.json()).then((strResponse) => {
+    if(strResponse.length < maxComments) {maxComments = strResponse.length}
+    for(i = 0; i < maxComments; i++) {
+      commentDiv.innerHTML += strResponse[i];
     }
   });
 }
 
-/** Update number of quotes visible on the page */
-function updateQuoteNum() {
-  updateQuotes(document.getElementById("numQuotes").value);
+/** Update number of comments visible on the page */
+function updateCommentNum() {
+  updateComments(document.getElementById("numComments").value);
 }
 
 /** Creates an <p> element containing text. */
@@ -126,5 +131,231 @@ function createPElement(text) {
 
 /** Deletes comments from datastore and refreshes page. */
 function deleteComments() {
-  fetch('/delete-data')
+  fetch('/delete-data');
+}
+
+/** Fetches login information and updates html within the
+  * loginPrompt div to reflect the login status. */
+function fetchLogin() {
+    var commentBox = document.getElementById('commentBox');
+    var loginPrompt = document.getElementById('loginPrompt');
+    loginPrompt.innerHTML = "";
+    fetch('/login').then(response => response.json()).then((loginStatus) => {
+        if(loginStatus[0] == "True") {
+            commentBox.style.display = "block";
+        } else {
+            commentBox.style.display = "none";
+        }
+        for(i = 1; i < loginStatus.length; i++) {
+            loginPrompt.innerHTML += loginStatus[i];
+        }
+    });
+}
+
+/** Initializes Map API. */
+function initMap() {
+  var worldCenter = {lat: 40.52, lng: 34.34};
+
+  // Initialize map.
+  var map = new google.maps.Map(document.getElementById("map"), {
+    center: worldCenter,
+    zoom: 3,
+    styles: [
+      { "elementType": "geometry",
+        "stylers": [{"color": "#ebe3cd"}]
+      },
+      { "elementType": "labels.text.fill",
+        "stylers": [{"color": "#523735"}]
+      },
+      { "elementType": "labels.text.stroke",
+        "stylers": [{"color": "#f5f1e6"}]
+      },
+      { 
+        "featureType": "administrative",
+        "elementType": "geometry.stroke",
+        "stylers": [{"color": "#c9b2a6"}]
+      },
+      {
+        "featureType": "administrative.land_parcel",
+        "elementType": "geometry.stroke",
+        "stylers": [{"color": "#dcd2be"}]
+      },
+      {
+        "featureType": "administrative.land_parcel",
+        "elementType": "labels.text.fill",
+        "stylers": [{"color": "#ae9e90"}]
+      },
+      {
+        "featureType": "landscape.natural",
+        "elementType": "geometry",
+        "stylers": [{"color": "#dfd2ae"}]
+      },
+      {
+        "featureType": "poi",
+        "elementType": "geometry",
+        "stylers": [{"color": "#dfd2ae"}]
+      },
+      {
+        "featureType": "poi",
+        "elementType": "labels.text",
+        "stylers": [{"visibility": "off"}]
+      },
+      {
+        "featureType": "poi",
+        "elementType": "labels.text.fill",
+        "stylers": [{"color": "#93817c"}]
+      },
+      {
+        "featureType": "poi.business",
+        "stylers": [{"visibility": "off"}]
+      },
+      {
+        "featureType": "poi.park",
+        "elementType": "geometry.fill",
+        "stylers": [{"color": "#a5b076"}]
+      },
+      {
+        "featureType": "poi.park",
+        "elementType": "labels.text.fill",
+        "stylers": [{"color": "#447530"}]
+      },
+      {
+        "featureType": "road",
+        "elementType": "geometry",
+        "stylers": [{"color": "#f5f1e6"}]
+      },
+      {
+        "featureType": "road",
+        "elementType": "labels.icon",
+        "stylers": [{"visibility": "off"}]
+      },
+      {
+        "featureType": "road.arterial",
+        "stylers": [{"visibility": "off"}]
+      },
+      {
+        "featureType": "road.arterial",
+        "elementType": "geometry",
+        "stylers": [{"color": "#fdfcf8"}]
+      },
+      {
+        "featureType": "road.highway",
+        "elementType": "geometry",
+        "stylers": [{"color": "#f8c967"}]
+      },
+      {
+        "featureType": "road.highway",
+        "elementType": "geometry.stroke",
+        "stylers": [{"color": "#e9bc62"}]
+      },
+      {
+        "featureType": "road.highway",
+        "elementType": "labels",
+        "stylers": [{"visibility": "off"}]
+      },
+      {
+        "featureType": "road.highway.controlled_access",
+        "elementType": "geometry",
+        "stylers": [{"color": "#e98d58"}]
+      },
+      {
+        "featureType": "road.highway.controlled_access",
+        "elementType": "geometry.stroke",
+        "stylers": [{"color": "#db8555"}]
+      },
+      {
+        "featureType": "road.local",
+        "stylers": [{"visibility": "off"}]
+      },
+      {
+        "featureType": "road.local",
+        "elementType": "labels.text.fill",
+        "stylers": [{"color": "#806b63"}]
+      },
+      {
+        "featureType": "transit",
+        "stylers": [{"visibility": "off"}]
+      },
+      {
+        "featureType": "transit.line",
+        "elementType": "geometry",
+        "stylers": [{"color": "#dfd2ae"}]
+      },
+      {
+        "featureType": "transit.line",
+        "elementType": "labels.text.fill",
+        "stylers": [{"color": "#8f7d77"}]
+      },
+      {
+        "featureType": "transit.line",
+        "elementType": "labels.text.stroke",
+        "stylers": [{"color": "#ebe3cd"}]
+      },
+      {
+        "featureType": "transit.station",
+        "elementType": "geometry",
+        "stylers": [{"color": "#dfd2ae"}]
+      },
+      {
+        "featureType": "water",
+        "elementType": "geometry.fill",
+        "stylers": [{"color": "#b9d3c2"}]
+      },
+      {
+        "featureType": "water",
+        "elementType": "labels.text.fill",
+        "stylers": [{"color": "#92998d"}]
+      }
+    ]
+  });
+
+  // Initialize marker.
+  var markers = initMarkers(map);
+}
+
+/** Initializes markers on map. */
+function initMarkers(map) {
+  var locData = initLocData();
+  var markers = [];
+
+  // Initialize a marker for each location.
+  locData.forEach((currLocation) => {
+    let coord = {lat: currLocation.lat, lng: currLocation.lng};
+    let marker = new google.maps.Marker({
+        position: coord, 
+        map: map,
+        animation: google.maps.Animation.DROP
+        });
+
+    // Add event listeners to markers.
+    marker.addListener('mouseover', () => toggleBounce(marker));
+    marker.addListener('mouseout', () => toggleBounce(marker));
+    marker.addListener('click', function() {location.href = currLocation.link});
+
+    // Push marker into collection.
+    markers.push(marker);
+  });
+  return markers;
+}
+
+/** Toggles BOUNCE animation for markers on mouse event. */
+function toggleBounce(marker) {
+  if (marker.getAnimation() !== null) {
+    marker.setAnimation(null);
+  } else {
+    marker.setAnimation(google.maps.Animation.BOUNCE);
+  }
+}
+
+// Initialize location coordinates and links.
+function initLocData() {
+  var locationCoordinates = [ 
+    {lat: 20.5937, lng: 78.9629, link: "https://indianaid.carrd.co"}, // India
+    {lat: 15.5527, lng: 48.5164, link:  "https://yemencrisis.carrd.co"}, // Yemen
+    {lat: 12.8797, lng: 121.7740, link: "https://junkterrorbill.carrd.co"}, // Philippines
+    {lat: 22.3193, lng: 114.1694, link: "https://standwithhongkong.carrd.co"}, // Hong Kong
+    {lat: 31.9522, lng: 35.2332, link: "https://helppalestine.carrd.co"}, // Palestine
+    {lat: 44.9778, lng: -93.2650, link: "https://blacklivesmatter.carrd.co"} // Minneapolis
+  ];
+  return locationCoordinates;
 }
