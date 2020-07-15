@@ -307,11 +307,11 @@ function initMap() {
     ]
   });
 
-  var markers = initMarkers(map);
+  var markers = getMarkers(map);
 }
 
 /** Initializes markers on map. */
-function initMarkers(map) {
+function getMarkers(map) {
   var locData = initLocData();
   var markers = [];
 
