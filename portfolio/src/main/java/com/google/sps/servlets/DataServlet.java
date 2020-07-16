@@ -36,18 +36,15 @@ public class DataServlet extends HttpServlet {
   private DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
   /** Retrieves user-generated comments from datastore to load onto page each time page is refreshed.
-   * Includes email of user that posted the comment. */
+    * Includes email of user that posted the comment. */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // Initialize strResponse
     ArrayList<String> strResponse = new ArrayList<>();
-
     UserService userService = UserServiceFactory.getUserService();
 
     // If user is not logged in, do not display comments.
     if (!userService.isUserLoggedIn()) return;
 
-    // Initialize query
     Query query = new Query("comment").addSort("timestamp", SortDirection.DESCENDING);
     PreparedQuery results = datastore.prepare(query);
 
@@ -65,11 +62,10 @@ public class DataServlet extends HttpServlet {
   }
 
   /** Retrieves comments from request form to store in datastore, along with the email of the user
-   * that posted it. This function assumes that a user cannot post without being logged in.
-   * Function finishes with a redirect call to /index.html which will effectively call doGet().*/
+    * that posted it. This function assumes that a user cannot post without being logged in.
+    * Function finishes with a redirect call to /index.html which will effectively call doGet(). */
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
     UserService userService = UserServiceFactory.getUserService();
 
     // Retrieve comment, comment quantity, and current user.
@@ -84,31 +80,23 @@ public class DataServlet extends HttpServlet {
     commentEntity.setProperty("user", (String) user.getProperty("nickname"));
     commentEntity.setProperty("timestamp", System.currentTimeMillis());
 
-    // Store entity.
     datastore.put(commentEntity);
-
-    // Redirect back to the front-page.
     response.setContentType("text/html");
     response.sendRedirect("/index.html");
   }
 
-  /* 
-   * Converts ArrayList of Strings to JSON using GSON. 
-   */
+  /** Converts ArrayList of Strings to JSON using GSON. */
   private String convertToJsonUsingGson(ArrayList<String> comments) {
     Gson gson = new Gson();
     String json = gson.toJson(comments);
     return json;
   }
 
-  /**
-   * Returns the entity coresponding to the current user.
-   */
+  /** Returns the entity coresponding to the current user. */
   private Entity getUser(String id) {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    Query query =
-        new Query("UserInfo")
-            .setFilter(new Query.FilterPredicate("id", Query.FilterOperator.EQUAL, id));
+    Query query = new Query("UserInfo")
+      .setFilter(new Query.FilterPredicate("id", Query.FilterOperator.EQUAL, id));
     PreparedQuery results = datastore.prepare(query);
     return results.asSingleEntity();
   }
