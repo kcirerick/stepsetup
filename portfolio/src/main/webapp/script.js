@@ -309,14 +309,12 @@ function initMap() {
     ]
   });
 
-
-  var markers = getMarkers(map);
+  initMarkers(map);
 }
 
 /** Initializes markers on map. */
-function getMarkers(map) {
+function initMarkers(map) {
   var locData = initLocData();
-  var markers = [];
 
   // Initialize a marker for each location.
   locData.forEach((currLocation) => {
@@ -331,11 +329,7 @@ function getMarkers(map) {
     marker.addListener('mouseover', () => toggleBounce(marker));
     marker.addListener('mouseout', () => toggleBounce(marker));
     marker.addListener('click', function() {location.href = currLocation.link});
-
-    // Push marker into collection.
-    markers.push(marker);
   });
-  return markers;
 }
 
 /** Toggles BOUNCE animation for markers on mouse event. */
