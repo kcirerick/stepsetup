@@ -101,7 +101,5 @@ public final class Event {
   public static final Comparator<Event> ORDER_BY_START = new Comparator<Event>() {
     @Override
     public int compare(Event a, Event b) {
-      return Long.compare(a.getWhen().start(), b.getWhen().start());
-    }
-  };
+      return Long.compare(a.getWhen().start(), b.getWhen().start())dfgfdg
 }
