@@ -101,17 +101,5 @@ public final class Event {
   public static final Comparator<Event> ORDER_BY_START = new Comparator<Event>() {
     @Override
     public int compare(Event a, Event b) {
-      return Long.compare(a.getWhen().start(), b.getWhen().start());
-    }
-  };
-
-  /**
-   * A comparator for sorting events by their end time in ascending order.
-   */
-  public static final Comparator<Event> ORDER_BY_END = new Comparator<Event>() {
-    @Override
-    public int compare(Event a, Event b) {
-      return Long.compare(a.getWhen().end(), b.getWhen().end());
-    }
-  };
+      return Long.compare(a.getWhen().start(), b.getWhen().start())dfgfdg
 }

@@ -31,13 +31,13 @@ public final class FindMeetingQuery {
     boolean noAttendees = (request.getAttendees().isEmpty() 
       && request.getOptionalAttendees().isEmpty());
 
-    if(request.getDuration() > TimeRange.WHOLE_DAY.duration()) {
+    if (request.getDuration() > TimeRange.WHOLE_DAY.duration()) {
       return mandatory; // Currently empty.
     }
-    if(events.isEmpty() || noAttendees) {
+    if (events.isEmpty() || noAttendees) {
+
       return Arrays.asList(TimeRange.WHOLE_DAY);
     }
-
     ArrayList<Event> orderedEvents = new ArrayList<Event>(events);
     Collections.sort(orderedEvents, Event.ORDER_BY_START);
 
@@ -72,13 +72,13 @@ public final class FindMeetingQuery {
     List<TimeRange> mandatory, List<TimeRange> optional) {
     // Add final period of the day to both lists.
     int timeAtEndOfDay = TimeRange.WHOLE_DAY.end() - lastEventEndMandatory;
-    if(timeAtEndOfDay >= request.getDuration()) {
+    if (timeAtEndOfDay >= request.getDuration()) {
       TimeRange option = TimeRange.fromStartDuration(lastEventEndMandatory, timeAtEndOfDay);
       mandatory.add(option);
     }
     
     timeAtEndOfDay = TimeRange.WHOLE_DAY.end() - lastEventEndOptional;
-    if(timeAtEndOfDay >= request.getDuration()) {
+    if (timeAtEndOfDay >= request.getDuration()) {
       TimeRange option = TimeRange.fromStartDuration(lastEventEndOptional, timeAtEndOfDay);
       optional.add(option);
     }
@@ -89,8 +89,8 @@ public final class FindMeetingQuery {
   private int[] updateListsWithCurrEvent(int lastEventEndMandatory, int lastEventEndOptional, MeetingRequest request,
     List<TimeRange> optional, List<TimeRange> mandatory, Collection<String> attendees, Event currEvent) {
 
-    if(Collections.disjoint(attendees, request.getAttendees())) { // If required don't need to be there.
-      if(!Collections.disjoint(attendees, request.getOptionalAttendees())) { // But optional do.
+    if (Collections.disjoint(attendees, request.getAttendees())) { // If required don't need to be there.
+      if (!Collections.disjoint(attendees, request.getOptionalAttendees())) { // But optional do.
         lastEventEndOptional = checkCurrEvent(currEvent, lastEventEndOptional, request, optional);
       }
     } else {
@@ -109,11 +109,11 @@ public final class FindMeetingQuery {
     int timeBetweenEvents = currRange.start() - lastEventEnd;
 
     // Overlapping events will fail this check without explicitly checking.
-    if(timeBetweenEvents >= request.getDuration()) {
+    if (timeBetweenEvents >= request.getDuration()) {
       TimeRange option = TimeRange.fromStartDuration(lastEventEnd, timeBetweenEvents);
       options.add(option);
     }
-    if(currRange.end() > lastEventEnd) {
+    if (currRange.end() > lastEventEnd) {
       lastEventEnd = currRange.end();
     }
     return lastEventEnd;
