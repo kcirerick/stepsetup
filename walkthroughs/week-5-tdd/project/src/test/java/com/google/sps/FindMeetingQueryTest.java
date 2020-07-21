@@ -275,7 +275,7 @@ public final class FindMeetingQueryTest {
   @Test
   public void busyOptionalAttendeesAreNotConsidered() {
     // Have each mandatory attendee have different events with an
-    // optional attendee who cannot atten. Options should include
+    // optional attendee who cannot attend. Options should include
     // only and all time ranges where mandatory attendees can attend.
     //
     // Events  : |--------------C--------------|
