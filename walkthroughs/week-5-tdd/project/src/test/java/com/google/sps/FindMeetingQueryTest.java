@@ -278,7 +278,8 @@ public final class FindMeetingQueryTest {
     // optional attendee who cannot atten. Options should include
     // only and all time ranges where mandatory attendees can attend.
     //
-    // Events  : |-----|--A--|--C--|--B--|-----|
+    // Events  : |--------------C--------------|
+    //                 |--A--|     |--B--|     |
     // Day     : |-----------------------------|
     // Options : |--1--|     |--2--|     |--3--|
 
